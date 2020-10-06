@@ -28,7 +28,7 @@ spec:
       enabled: true
       annotations:
         kubernetes.io/ingress.class: "traefik"
-    # TODO: why was this in here? Maybe because the hostnetwork stuff
+    # @CHANGEME: why was this in here? Maybe because the hostnetwork stuff
     # service:
     #   type: LoadBalancer
     #   externalIPs:
@@ -40,7 +40,7 @@ spec:
         enabled: false
       readiness:
         enabled: false
-    # TODO: do I actually need this?
+    # @CHANGEME: do I actually need this?
     # vscode:
     #   enabled: true
     #   image:

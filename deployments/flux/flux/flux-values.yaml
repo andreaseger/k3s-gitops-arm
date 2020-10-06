@@ -1,11 +1,8 @@
 helmOperator:
   create: false
-#
-# @CHANGEME - Update url to your public repo URL
-#
 git:
   url: "git@github.com:andreaseger/k3s-gitops-arm.git"
-  branch: master
+  branch: customize
   path: deployments
 image:
   repository: raspbernetes/flux
