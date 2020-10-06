@@ -4,7 +4,7 @@ helmOperator:
 # @CHANGEME - Update url to your public repo URL
 #
 git:
-  url: "git@github.com:onedr0p/homelab-gitops.git"
+  url: "git@github.com:andreaseger/k3s-gitops-arm.git"
   branch: master
   path: deployments
 image:

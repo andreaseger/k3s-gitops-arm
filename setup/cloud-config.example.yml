@@ -10,7 +10,7 @@ manage_etc_hosts: true
 # @CHANGEME - Update locale and timezone
 #
 locale: "en_US.UTF-8"
-timezone: "America/New_York"
+timezone: "Europe/Vienna"
 
 apt_preserve_sources_list: true
 apt_update: true

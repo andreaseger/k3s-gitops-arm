@@ -9,23 +9,21 @@ metadata:
     fluxcd.io/automated: "false"
 spec:
   releaseName: nzbget
+  helmVersion: v3
   rollback:
     enable: true
   chart:
-    repository: https://billimek.com/billimek-charts/
+    repository: https://k8s-at-home.com/charts/
     name: nzbget
-    version: 3.1.2
+    version: 5.0.0
   values:
-    image:
-      repository: linuxserver/nzbget
-      tag: v21.0-ls42
-    timezone: "America/New_York"
+    timezone: "Europe/Vienna"
     puid: 1000
     pgid: 100
     ingress:
       enabled: true
       annotations:
-        kubernetes.io/ingress.class: "nginx"
+        kubernetes.io/ingress.class: "traefik"
     persistence:
       config:
         enabled: true
@@ -41,17 +39,5 @@ spec:
         cpu: 25m
       limits:
         memory: 1000Mi
-    #
-    # @CHANGEME - Update the hostname to the node you want this deployed to
-    #
-    affinity:
-      nodeAffinity:
-        requiredDuringSchedulingIgnoredDuringExecution:
-          nodeSelectorTerms:
-          - matchExpressions:
-            - key: kubernetes.io/hostname
-              operator: In
-              values:
-              - k3s-worker-a
   valueFileSecrets:
   - name: "nzbget-helm-values"

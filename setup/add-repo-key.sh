@@ -7,10 +7,7 @@
 # 1. delete any existing repo keys
 # 2. add a new repo key from the input passed-in
 
-#
-# @CHANGEME - Update to your GitHub Username
-#
-github_username=onedr0p
+github_username=andreaseger
 
 if [ ! -f "$HOME/.secret/github_access_token" ]; then
     echo "$HOME/.secret/github_access_token needs to exist with a GitHub personal access token"

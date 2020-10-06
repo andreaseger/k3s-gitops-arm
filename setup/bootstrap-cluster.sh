@@ -10,8 +10,8 @@
 #
 # @CHANGEME - Update USER to your RPi SSH user
 #
-USER="devin"
-K3S_VERSION="v1.17.3+k3s1"
+USER="ane"
+K3S_VERSION="v1.19.2+k3s1"
 
 REPO_ROOT=$(git rev-parse --show-toplevel)
 ANSIBLE_INVENTORY="${REPO_ROOT}"/ansible/inventory

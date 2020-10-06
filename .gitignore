@@ -1,5 +1,5 @@
 ansible/inventory
 ansible/vars.yml
-setup/cloud-config-*
+setup/cloud-config.yml
 secrets/.secrets.env
 .DS_Store

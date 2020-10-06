@@ -1,0 +1,14 @@
+vscode:
+  ingress:
+    hosts:
+    - "hass-editor.$DOMAIN"
+    tls:
+    - hosts:
+      - "hass-editor.$DOMAIN"
+  extraEnv:
+    HASS_TOKEN: "${HASS_TOKEN}"
+ingress:
+  hosts: [hass.$DOMAIN]
+  tls:
+  - hosts:
+    - hass.$DOMAIN  
