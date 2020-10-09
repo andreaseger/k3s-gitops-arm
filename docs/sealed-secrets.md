@@ -32,3 +32,18 @@ cp .env.secrets.sample .env.secrets
 cd secrets
 ./generate-secrets.sh
 ```
+
+## Backup & restore master key
+
+Backup via
+
+```
+$ kubectl get secret -n kube-system -l sealedsecrets.bitnami.com/sealed-secrets-key -o yaml > master.key
+```
+
+Restore via
+
+```
+$ kubectl apply -f master.key
+$ kubectl delete pod -n kube-system -l name=sealed-secrets-controller
+```

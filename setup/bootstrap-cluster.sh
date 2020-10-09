@@ -7,9 +7,6 @@
 # Ensure you have the right IPs and hostnames in the right section
 #
 
-#
-# @CHANGEME - Update USER to your RPi SSH user
-#
 USER="ane"
 K3S_VERSION="v1.19.2+k3s1"
 
@@ -42,7 +39,9 @@ k3sMasterNode() {
     k3sup install --ip "${K3S_MASTER}" \
         --k3s-version "${K3S_VERSION}" \
         --user "${USER}" \
-        --k3s-extra-args "--no-deploy servicelb --no-deploy traefik --no-deploy metrics-server --default-local-storage-path /k3s-local-storage"
+        --ssh-key ~/.ssh/id_ed25519 \
+        --k3s-extra-args "--disable traefik --default-local-storage-path /k3s-local-storage"
+        # --k3s-extra-args "--disable servicelb --disable traefik --disable metrics-server --default-local-storage-path /k3s-local-storage"
     mkdir -p ~/.kube
     mv ./kubeconfig ~/.kube/config
     sleep 10
@@ -54,7 +53,8 @@ ks3WorkerNodes() {
         k3sup join --ip "${worker}" \
             --server-ip "${K3S_MASTER}" \
             --k3s-version "${K3S_VERSION}" \
-            --user "${USER}"
+            --user "${USER}" \
+            --ssh-key ~/.ssh/id_ed25519
             ## Does not work :(
             #--k3s-extra-args "--node-label role.node.kubernetes.io/worker=worker"
 
@@ -64,6 +64,27 @@ ks3WorkerNodes() {
         hostname=$(ansible-inventory -i ${ANSIBLE_INVENTORY} --list | jq -r --arg k3s_worker "$worker" '._meta[] | .[$k3s_worker].hostname')
         kubectl label node ${hostname} node-role.kubernetes.io/worker=worker
     done
+}
+
+installSealedSecrets(){
+    message "Installing sealed-secrets"
+
+    kubectl apply -f "${REPO_ROOT}"/deployments/kube-system/sealed-secrets.yaml
+
+    SEALED_SECRETS_READY=1
+    while [ ${FLUX_READY} != 0 ]; do
+        echo "Waiting for sealed-secrets pod to be fully ready..."
+        kubectl -n kube-system wait --for condition=available deployment/sealed-secrets
+        SEALED_SECRETS_READY="$?"
+        sleep 5
+    done
+    sleep 5
+
+    pushd ${REPO_ROOT}/secrets
+        message "updating sealedsecrets"
+        kubeseal --controller-name sealed-secrets --fetch-cert > ./pub-cert.pem
+        ./generate-secrets.sh
+    popd
 }
 
 installFlux() {
@@ -91,11 +112,12 @@ addDeployKey() {
     FLUX_KEY=$(kubectl -n flux logs deployment/flux | grep identity.pub | cut -d '"' -f2)
 
     message "Adding the key to github automatically"
-    "${REPO_ROOT}"/hack/add-repo-key.sh "${FLUX_KEY}"
+    "${REPO_ROOT}"/setup/add-repo-key.sh "${FLUX_KEY}"
 }
 
 k3sMasterNode
 ks3WorkerNodes
+installSealedSecrets
 installFlux
 addDeployKey
 

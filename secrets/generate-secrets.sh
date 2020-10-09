@@ -19,7 +19,7 @@ else
   . "${REPO_ROOT}/setup/.secrets.env"
 fi
 
-PUB_CERT="${REPO_ROOT}/setup/pub-cert.pem"
+PUB_CERT="${REPO_ROOT}/secrets/pub-cert.pem"
 
 # Helper function to generate secrets
 kseal() {
@@ -41,7 +41,7 @@ kseal() {
   envsubst < "$@" | tee values.yaml \
     | \
   kubectl -n "${namespace}" create secret generic "${secret_name}" \
-    --from-file=values.yaml --dry-run -o json \
+    --from-file=values.yaml --dry-run=client -o json \
     | \
   kubeseal --format=yaml --cert="$PUB_CERT" \
     > "${secret}.yaml"
@@ -56,27 +56,18 @@ kseal() {
 kseal "${REPO_ROOT}/deployments/default/radarr/radarr-helm-values.txt"
 kseal "${REPO_ROOT}/deployments/default/sonarr/sonarr-helm-values.txt"
 kseal "${REPO_ROOT}/deployments/default/nzbget/nzbget-helm-values.txt"
+kseal "${REPO_ROOT}/deployments/default/nzbhydra2/nzbhydra2-helm-values.txt"
+kseal "${REPO_ROOT}/deployments/default/home-assistant/home-assistant-db-helm-values.txt"
+kseal "${REPO_ROOT}/deployments/default/home-assistant/home-assistant-helm-values.txt"
 
 #
 # Generic Secrets
 #
 
-# NginX Basic Auth - default Namespace
-kubectl create secret generic nginx-basic-auth \
-  --from-literal=auth="$NGINX_BASIC_AUTH" \
-  --namespace default --dry-run -o json \
+# Traefik - default Namespace
+kubectl create secret generic traefik-secret \
+  --from-literal=gandi-api-key="$GANDIV5_API_KEY" \
+  --namespace kube-system --dry-run=client -o json \
   | \
 kubeseal --format=yaml --cert="$PUB_CERT" \
-    > "$REPO_ROOT"/deployments/kube-system/nginx-ingress/basic-auth-default.yaml
-
-# NginX Basic Auth - kube-system Namespace
-kubectl create secret generic nginx-basic-auth \
-  --from-literal=auth="$NGINX_BASIC_AUTH" \
-  --namespace kube-system --dry-run -o json \
-  | \
-kubeseal --format=yaml --cert="$PUB_CERT" \
-    > "$REPO_ROOT"/deployments/kube-system/nginx-ingress/basic-auth-kube-system.yaml
-
-
-
-
+    > "$REPO_ROOT"/deployments/kube-system/traefik-ingress/traefik-secret.yaml

@@ -30,11 +30,11 @@ kapply() {
   fi
 }
 
-CERT_MANAGER_READY=1
-while [ $CERT_MANAGER_READY != 0 ]; do
-  message "waiting for cert-manager to be fully ready..."
-  kubectl -n cert-manager wait --for condition=Available deployment/cert-manager > /dev/null 2>&1
-  CERT_MANAGER_READY="$?"
-  sleep 5
-done
-kapply "$REPO_ROOT"/deployments/cert-manager/cloudflare/cert-manager-letsencrypt.txt
+# CERT_MANAGER_READY=1
+# while [ $CERT_MANAGER_READY != 0 ]; do
+#   message "waiting for cert-manager to be fully ready..."
+#   kubectl -n cert-manager wait --for condition=Available deployment/cert-manager > /dev/null 2>&1
+#   CERT_MANAGER_READY="$?"
+#   sleep 5
+# done
+# kapply "$REPO_ROOT"/deployments/cert-manager/cloudflare/cert-manager-letsencrypt.txt

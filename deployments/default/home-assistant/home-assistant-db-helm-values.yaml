@@ -1,0 +1,15 @@
+apiVersion: bitnami.com/v1alpha1
+kind: SealedSecret
+metadata:
+  creationTimestamp: null
+  name: home-assistant-db-helm-values
+  namespace: default
+spec:
+  encryptedData:
+    values.yaml: AgCZ6tENpwxjY+ro5KDimXd9QxCLqVQD28XlISB1/GTwGH4+SkyFP4L6qiE2JVvj6ljf2/BdiyRvgwZkWjJU9hIy7kol1SRQI7uADH4zs5T3nfOtJGIl7KVPK2toCz6X3ErmkGgM9OT2hf6klVa0Rz+bexdlEVhtYYcGWAq7eJh2X2ZQ/nPfBMJDYqGO+I+jfQUDsWTS+DOsigkDS2BKOW5y4+A2EbY28vp2fa3ynEEA/Ypdihgk6gt/WMGSuBM3ab2YN0DHiHYC9444P2os2HJgnaZ8PIWeUsqB6efjjehtM5QN5ErVXuw6keMSMspb/gyMzE6bu8IYwikpgXPr/R4Ahxl0NOP0YsyL0TtWm2GdRX9hsvM/idq0bCgRnQxo10MxTLg8YyFLAqth7tAZBZ1rI8UbWTEV27MERZXH3lggIilXxqdJ7iad4kfhg+NP2lyt6SEjB+FVVR8aG8PVNBUcMrUW6Io4A/PNkUwGUTPS2blsWwHuzP8YNxCPK7ZYIJNIOBaxy11iExFQVW4fvSBM+wgme7Zs4Ry/4GXauqGjxRL0SVstJ8uWOHgbl/iMFcU4pdQsztlrX9ai1cT9xKZD5fYM+SFWboY7k0GUuVgyDuM5Bbn8eM64+xxHhiO5MqqktZuEY+XrgxeDUKS7WZK86RayzW1A4Rs8gKVw+UQ0RlQmPC1l//VcXgEzpiPh9jEW3Q03hpn6VgDjU9bmrCNbbFn6eQ==
+  template:
+    metadata:
+      creationTimestamp: null
+      name: home-assistant-db-helm-values
+      namespace: default
+

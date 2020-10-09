@@ -40,7 +40,6 @@
       - libnss-mdns
       - neofetch
       - net-tools
-      - nfs-common
       - nmap
       - psmisc
       - python3
@@ -50,6 +49,8 @@
       - traceroute
       - unattended-upgrades
       - wget
+      - vim
+      - avahi-daemon
     install_recommends: false
     update_cache: true
     # Need the force_apt_get until
@@ -77,12 +78,6 @@
     - 10periodic
     - 50unattended-upgrades
 
-# See: https://github.com/kubernetes/kubernetes/issues/71305
-- name: Use iptables-legacy instead of nftables.
-  alternatives:
-    name: iptables
-    path: /usr/sbin/iptables-legacy
-
 - name: Restart systemd-timesyncd service
   systemd:
     name: systemd-timesyncd
@@ -92,6 +87,19 @@
 - name: Enable systemd-timesyncd service and assure it is started
   systemd:
     name: systemd-timesyncd
+    enabled: true
+    state: started
+
+# Start and enable avahi for mDNS
+- name: Restart avahi-daemon service
+  systemd:
+    name: avahi-daemon
+    enabled: true
+    state: restarted
+
+- name: Enable avahi-daemon service and assure it is started
+  systemd:
+    name: avahi-daemon
     enabled: true
     state: started
 
@@ -136,49 +144,41 @@
     path: "{{ item }}"
     state: touch
   with_items:
-    - /boot/firmware/nobtcmd.txt
+    - /boot/firmware/cmdline.txt
     - /boot/firmware/syscfg.txt
 
 - name: Enable required cgroup features and disable IPv6
   lineinfile:
-    path: /boot/firmware/nobtcmd.txt
+    path: /boot/firmware/cmdline.txt
     backrefs: true
     regexp: '^(.*fixrtc)$'
     line: '\1 ipv6.disable=1 cgroup_memory=1 cgroup_enable=memory apparmor=0 mitigations=off max_loop=32'
     state: present
   when: deploy_target != 'vagrant'
 
-- name: Disable WiFi
-  blockinfile:
-    path: /boot/firmware/syscfg.txt
-    marker: "# {mark} ANSIBLE DISABLE WIFI"
-    block: |
-      dtoverlay=pi3-disable-wifi
-  when: deploy_target != 'vagrant'
+# - name: Disable WiFi
+#   blockinfile:
+#     path: /boot/firmware/syscfg.txt
+#     marker: "# {mark} ANSIBLE DISABLE WIFI"
+#     block: |
+#       dtoverlay=disable-wifi
+#   when: deploy_target != 'vagrant'
 
 - name: Disable Bluetooth
   blockinfile:
     path: /boot/firmware/syscfg.txt
     marker: "# {mark} ANSIBLE DISABLE BLUETOOTH"
     block: |
-      dtoverlay=pi3-disable-bt
+      dtoverlay=disable-bt
   when: deploy_target != 'vagrant'
 
-- name: Disable HDMI
-  blockinfile:
-    path: /boot/firmware/syscfg.txt
-    marker: "# {mark} ANSIBLE DISABLE HDMI"
-    block: |
-      hdmi_blanking=2
-  when: deploy_target != 'vagrant'
-
-- name: Disable Audio
-  blockinfile:
-    path: /boot/firmware/syscfg.txt
-    marker: "# {mark} ANSIBLE DISABLE AUDIO"
-    block: |
-      dtparam=audio=off
-  when: deploy_target != 'vagrant'
+# - name: Disable Audio
+#   blockinfile:
+#     path: /boot/firmware/syscfg.txt
+#     marker: "# {mark} ANSIBLE DISABLE AUDIO"
+#     block: |
+#       dtparam=audio=off
+#   when: deploy_target != 'vagrant'
 
 - name: Disable Uart
   blockinfile:
@@ -188,19 +188,21 @@
       enable_uart=0
   when: deploy_target != 'vagrant'
 
-- name: Trottle GPU
-  blockinfile:
-    path: /boot/firmware/syscfg.txt
-    marker: "# {mark} ANSIBLE THROTTLE GPU"
-    block: |
-      gpu_mem=16
-  when: deploy_target != 'vagrant'
+# @CHANGEME adapt if needed to PI4
+# - name: Trottle GPU
+#   blockinfile:
+#     path: /boot/firmware/syscfg.txt
+#     marker: "# {mark} ANSIBLE THROTTLE GPU"
+#     block: |
+#       gpu_mem=16
+#   when: deploy_target != 'vagrant'
 
-- name: Overclock CPU
-  blockinfile:
-    path: /boot/firmware/syscfg.txt
-    marker: "# {mark} ANSIBLE OVERCLOCK CPU"
-    block: |
-      over_voltage=2
-      arm_freq=1750
-  when: deploy_target != 'vagrant'
+# @CHANGEME adapt if needed to PI4
+# - name: Overclock CPU
+#   blockinfile:
+#     path: /boot/firmware/syscfg.txt
+#     marker: "# {mark} ANSIBLE OVERCLOCK CPU"
+#     block: |
+#       over_voltage=2
+#       arm_freq=1750
+#   when: deploy_target != 'vagrant'

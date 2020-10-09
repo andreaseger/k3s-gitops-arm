@@ -5,7 +5,7 @@ metadata:
   name: hass-db
   namespace: default
   annotations:
-    fluxcd.io/ignore: "false"
+    fluxcd.io/ignore: "true"
     fluxcd.io/automated: "false"
 spec:
   releaseName: hass-db
@@ -23,7 +23,7 @@ spec:
     postgresqlDatabase: "homeassistant"
     persistence:
       enabled: true
-      storageClass: "longhorn"
+      storageClass: "local-path"
       mountPath: "/data/"
     metrics:
       enabled: true

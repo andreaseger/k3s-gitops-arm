@@ -4,6 +4,7 @@ git:
   url: "git@github.com:andreaseger/k3s-gitops-arm.git"
   branch: customize
   path: deployments
+  readonly: true
 image:
   repository: raspbernetes/flux
   tag: 1.20.2

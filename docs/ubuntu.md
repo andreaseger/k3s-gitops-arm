@@ -13,8 +13,8 @@ sudo chmod +x /usr/local/bin/flash
 
 ```bash
 cd ~/Downloads
-curl -L "http://cdimage.ubuntu.com/releases/eoan/release/ubuntu-19.10.1-preinstalled-server-arm64+raspi3.img.xz" -o ubuntu-19.10.1-preinstalled-server-arm64+raspi3.img.xz
-unxz -T 0 ~/Downloads/ubuntu-19.10.1-preinstalled-server-arm64+raspi3.img.xz
+curl -L "https://cdimage.ubuntu.com/releases/20.04.1/release/ubuntu-20.04.1-preinstalled-server-arm64+raspi.img.xz" -o ubuntu-20.04.1-preinstalled-server-arm64+raspi.img.xz
+unxz -T 0 ~/Downloads/ubuntu-20.04.1-preinstalled-server-arm64+raspi.img.xz
 ```
 
 ## Configure
@@ -25,9 +25,11 @@ Update [cloud-config.example.yml](../setup/cloud-config.example.yml) as you see 
 
 ```bash
 flash \
-    --userdata setup/cloud-config.example.yml \
+    --userdata setup/cloud-config.yml \
     ~/Downloads/ubuntu-19.10.1-preinstalled-server-arm64+raspi3.img
 ```
+
+or flash with other tools and `cp setup/cloud-config.yml <bootdrive>/user-data`
 
 ## Boot
 
