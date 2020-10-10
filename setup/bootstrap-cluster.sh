@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-set -e
+
 # Modified with credit to: billimek@github
 
 #
@@ -80,24 +80,24 @@ ks3WorkerNodes() {
 installSealedSecrets(){
     message "Installing sealed-secrets"
 
-    # kubectl apply -f "${REPO_ROOT}"/deployments/kube-system/sealed-secrets/sealed-secrets.yaml
+    kubectl apply -f "${REPO_ROOT}"/deployments/kube-system/sealed-secrets/sealed-secrets.yaml
 
-    # sleep 5
+    sleep 5
 
-    # SEALED_SECRETS_READY=1
-    # while [ ${SEALED_SECRETS_READY} != 0 ]; do
-    #     echo "Waiting for sealed-secrets job to be done..."
-    #     kubectl -n kube-system wait --for condition=complete job.batch/helm-install-sealed-secrets
-    #     SEALED_SECRETS_READY="$?"
-    #     sleep 5
-    # done
-    # SEALED_SECRETS_READY=1
-    # while [ ${SEALED_SECRETS_READY} != 0 ]; do
-    #     echo "Waiting for sealed-secrets pod to be fully ready..."
-    #     kubectl -n kube-system wait --for condition=available deployment/sealed-secrets
-    #     SEALED_SECRETS_READY="$?"
-    #     sleep 5
-    # done
+    SEALED_SECRETS_READY=1
+    while [ ${SEALED_SECRETS_READY} != 0 ]; do
+        echo "Waiting for sealed-secrets job to be done..."
+        kubectl -n kube-system wait --for condition=complete job.batch/helm-install-sealed-secrets
+        SEALED_SECRETS_READY="$?"
+        sleep 5
+    done
+    SEALED_SECRETS_READY=1
+    while [ ${SEALED_SECRETS_READY} != 0 ]; do
+        echo "Waiting for sealed-secrets pod to be fully ready..."
+        kubectl -n kube-system wait --for condition=available deployment/sealed-secrets
+        SEALED_SECRETS_READY="$?"
+        sleep 5
+    done
         
     sleep 5
 
@@ -139,8 +139,8 @@ addDeployKey() {
     #"${REPO_ROOT}"/setup/add-repo-key.sh "${FLUX_KEY}"
 }
 
-# prepNodes
-# k3sMasterNode
+prepNodes
+k3sMasterNode
 # ks3WorkerNodes
 installSealedSecrets
 installFlux

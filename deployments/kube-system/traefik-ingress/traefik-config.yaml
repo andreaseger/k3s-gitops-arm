@@ -2,7 +2,7 @@ apiVersion: v1
 kind: ConfigMap
 metadata:
   name: traefik-configs
-  namespace: default
+  namespace: kube-system
 data:
   dynamic.yaml: |
     certificatesResolvers:
