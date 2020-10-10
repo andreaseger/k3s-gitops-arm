@@ -156,13 +156,13 @@
     state: present
   when: deploy_target != 'vagrant'
 
-# - name: Disable WiFi
-#   blockinfile:
-#     path: /boot/firmware/syscfg.txt
-#     marker: "# {mark} ANSIBLE DISABLE WIFI"
-#     block: |
-#       dtoverlay=disable-wifi
-#   when: deploy_target != 'vagrant'
+- name: Disable WiFi
+  blockinfile:
+    path: /boot/firmware/syscfg.txt
+    marker: "# {mark} ANSIBLE DISABLE WIFI"
+    block: |
+      dtoverlay=disable-wifi
+  when: deploy_target != 'vagrant'
 
 - name: Disable Bluetooth
   blockinfile:

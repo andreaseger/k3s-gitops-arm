@@ -5,7 +5,7 @@ metadata:
   name: nzbhydra2
   namespace: default
   annotations:
-    fluxcd.io/ignore: "true"
+    fluxcd.io/ignore: "false"
     fluxcd.io/automated: "false"
 spec:
   releaseName: nzbhydra2
@@ -17,18 +17,10 @@ spec:
     name: nzbhydra2
     version: 3.0.1
   values:
-    image:
-      repository: linuxserver/nzbhydra2
-      tag: v2.29.1-ls16
     ingress:
       enabled: true
       annotations:
-        kubernetes.io/ingress.class: "internal"
-      hosts:
-      - "nzbhydra2.devbu.io"
-      tls:
-      - hosts:
-        - "nzbhydra2.devbu.io"
+        kubernetes.io/ingress.class: "traefik"
     timezone: "Europe/Vienna"
     puid: 1000
     pgid: 1000
@@ -37,12 +29,12 @@ spec:
         enabled: true
         storageClass: "local-path"
         accessMode: ReadWriteOnce
-        size: 2Gi
+        size: 1Gi
     resources:
       requests:
-        memory: 500Mi
+        memory: 256Mi
         cpu: 25m
       limits:
-        memory: 1000Mi
+        memory: 768Mi
   valueFileSecrets:
   - name: "nzbhydra2-helm-values"

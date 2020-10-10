@@ -81,21 +81,14 @@ ks3WorkerNodes() {
 installSealedSecrets(){
     message "Installing sealed-secrets"
 
-    kubectl apply -f "${REPO_ROOT}"/deployments/kube-system/sealed-secrets/sealed-secrets.yaml
+    kubectl apply -f "${REPO_ROOT}"/deployments/kube-system/sealed-secrets/controller.yaml
 
     sleep 5
 
     SEALED_SECRETS_READY=1
     while [ ${SEALED_SECRETS_READY} != 0 ]; do
-        echo "Waiting for sealed-secrets job to be done..."
-        kubectl -n kube-system wait --for condition=complete job.batch/helm-install-sealed-secrets
-        SEALED_SECRETS_READY="$?"
-        sleep 5
-    done
-    SEALED_SECRETS_READY=1
-    while [ ${SEALED_SECRETS_READY} != 0 ]; do
         echo "Waiting for sealed-secrets pod to be fully ready..."
-        kubectl -n kube-system wait --for condition=available deployment/sealed-secrets
+        kubectl -n kube-system wait --for condition=available deployment/sealed-secrets-controller
         SEALED_SECRETS_READY="$?"
         sleep 5
     done
@@ -151,9 +144,9 @@ addDeployKey() {
 prepNodes
 k3sMasterNode
 # ks3WorkerNodes
+installSealedSecrets
 installLinkerd
 installFlux
-installSealedSecrets
 addDeployKey
 
 sleep 5
