@@ -152,8 +152,8 @@ prepNodes
 k3sMasterNode
 # ks3WorkerNodes
 installLinkerd
-installSealedSecrets
 installFlux
+installSealedSecrets
 addDeployKey
 
 sleep 5
