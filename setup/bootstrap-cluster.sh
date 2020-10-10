@@ -26,6 +26,7 @@ need "helm"
 need "k3sup"
 need "ansible-inventory"
 need "jq"
+need "linkerd"
 
 K3S_MASTER=$(ansible-inventory -i ${ANSIBLE_INVENTORY} --list | jq -r '.k3s_master[] | @tsv')
 # K3S_WORKERS=$(ansible-inventory -i ${ANSIBLE_INVENTORY} --list | jq -r '.k3s_worker[] | @tsv')
@@ -110,6 +111,13 @@ installSealedSecrets(){
     git push -u origin $REPO_BRANCH
 }
 
+installLinkerd() {
+    message "Installing linkerd"
+    linkerd install | kubectl apply -f -
+    echo "waiting for linkerd to be up..."
+    linkerd check
+}
+
 installFlux() {
     message "Installing flux"
 
@@ -143,6 +151,7 @@ prepNodes
 k3sMasterNode
 # ks3WorkerNodes
 installSealedSecrets
+installLinkerd
 installFlux
 addDeployKey
 
