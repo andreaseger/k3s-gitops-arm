@@ -1,6 +1,9 @@
 #!/usr/bin/env bash
+set -e
 
 export REPO_ROOT=$(git rev-parse --show-toplevel)
+
+die() { echo "$*" 1>&2 ; exit 1; }
 
 need() {
     which "$1" &>/dev/null || die "Binary '$1' is missing but required"

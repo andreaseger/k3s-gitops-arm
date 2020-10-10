@@ -1,6 +1,16 @@
-#Things to install on the control server
+# Things to install on the control server
 
-# Ansible
+## Ansible
+
+```
+sudo apt install ansible
+```
+
+## jq
+
+```
+sudo apt install jq
+```
 
 ## k3sup
 

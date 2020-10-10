@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-
+set -e
 # Modified with credit to: billimek@github
 
 #
@@ -14,6 +14,7 @@ REPO_ROOT=$(git rev-parse --show-toplevel)
 REPO_BRANCH=$(git symbolic-ref HEAD ^/dev/null | sed -e 's|^refs/heads/||')
 ANSIBLE_INVENTORY="${REPO_ROOT}"/ansible/inventory
 
+die() { echo "$*" 1>&2 ; exit 1; }
 need() {
     which "$1" &>/dev/null || die "Binary '$1' is missing but required"
 }

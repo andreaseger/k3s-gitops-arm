@@ -1,4 +1,5 @@
 #!/usr/bin/env sh
+set -e
 
 # Credit: billimek@github
 # https://github.com/billimek/k8s-gitops/blob/master/setup/add-repo-key.sh
@@ -20,6 +21,8 @@ if [ -z "$1" ]; then
 else
     KEY="$1"
 fi
+
+die() { echo "$*" 1>&2 ; exit 1; }
 
 need() {
     which "$1" &>/dev/null || die "Binary '$1' is missing but required"
