@@ -30,8 +30,8 @@ spec:
       - name: traefik-configs
         mountPath: "/config"
         type: configMap
-    # additionalArguments:
-    #   - "--providers.file.filename=/config/dynamic.toml"
+    additionalArguments:
+      - "--providers.file.filename=/config/dynamic.yaml"
     #
     # @CHANGEME - Update loadBalancerIP to the IP traefik will use.
     # It should match a IP Address you have in range for MetalLB

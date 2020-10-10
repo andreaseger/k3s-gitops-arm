@@ -4,9 +4,12 @@ metadata:
   name: traefik-configs
   namespace: default
 data:
-  dynamic.toml: |
-    [certificatesResolvers.myresolver.acme]
-    storage = "/data/acme.json"
-    caServer = "https://acme-staging-v02.api.letsencrypt.org/directory"
-      [certificatesResolvers.myresolver.acme.dnsChallenge]
-      provider = "gandiv5"
+  dynamic.yaml: |
+    certificatesResolvers:
+      myresolver:
+        acme:
+          email: $ACME_EMAIL
+          storage: "/data/acme.json"
+          caServer: "https://acme-staging-v02.api.letsencrypt.org/directory"
+          dnsChallenge:
+            provider: gandiv5
