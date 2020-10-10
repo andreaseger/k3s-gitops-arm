@@ -13,3 +13,6 @@ data:
           caServer: "https://acme-staging-v02.api.letsencrypt.org/directory"
           dnsChallenge:
             provider: gandiv5
+    api:
+      dashboard: true
+      insecure: true

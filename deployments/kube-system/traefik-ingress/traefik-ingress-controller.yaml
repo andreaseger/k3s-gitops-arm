@@ -20,6 +20,9 @@ spec:
     # @CHANGEME - add proper traefik config
     # https://github.com/traefik/traefik-helm-chart/blob/master/traefik/values.yaml
     #
+    deployment:
+      annotations:
+        linkerd.io/inject: enabled
     incressClass:
       enabled: true
       isDefaultClass: true

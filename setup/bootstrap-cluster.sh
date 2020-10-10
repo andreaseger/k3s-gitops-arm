@@ -116,6 +116,7 @@ installLinkerd() {
     linkerd install | kubectl apply -f -
     echo "waiting for linkerd to be up..."
     linkerd check
+    
 }
 
 installFlux() {
@@ -150,8 +151,8 @@ addDeployKey() {
 prepNodes
 k3sMasterNode
 # ks3WorkerNodes
-installSealedSecrets
 installLinkerd
+installSealedSecrets
 installFlux
 addDeployKey
 
