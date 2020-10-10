@@ -1,8 +1,9 @@
+---
 apiVersion: v1
 kind: Service
 metadata:
-  name: linkerd-grafana
-  namespace: linkerd
+  name: traefik-dashboard
+  namespace: kube-system
 spec:
   ports:
     - name: http
@@ -10,31 +11,23 @@ spec:
       targetPort: 9000
   selector:
     app.kubernetes.io/name: traefik
-  sessionAffinity: None
   type: ClusterIP
 ---
-apiVersion: traefik.containo.us/v1alpha1
-kind: Middleware
-metadata:
-  name: l5d-header-middleware-traefik-dashboard
-  namespace: kube-system
-spec:
-  headers:
-    customRequestHeaders:
-      l5d-dst-override: "traffic-ingress.kube-system.svc.cluster.local:9000"
----
-apiVersion: traefik.containo.us/v1alpha1
-kind: IngressRoute
+apiVersion: networking.k8s.io/v1
+kind: Ingress
 metadata:
   name: traefik-dashboard
   namespace: kube-system
+  annotations:
+    kubernetes.io/ingress.class: "traefik"
+    traefik.ingress.kubernetes.io/auth-type: basic
+    traefik.ingress.kubernetes.io/auth-secret: traefik-basic-auth
+    ingress.kubernetes.io/custom-request-headers: l5d-dst-override:traefik-dashboard.kube-system.svc.cluster.local:9000
 spec:
-  routes:
-  - match: Host(`traefik.home.a6.io`) && (PathPrefix(`/api`) || PathPrefix(`/dashboard`))
-    kind: Rule
-    services:
-    - name: api@internal
-      kind: TraefikService
-    middlewares:
-      - name: traefik-basic-auth
-      - name: l5d-header-middleware-traefik-dashboard
+  rules:
+    - host: traefik.home.a6.io
+      http:
+        paths:
+            backend:
+              name: traefik-dashboard
+              port: 9000
