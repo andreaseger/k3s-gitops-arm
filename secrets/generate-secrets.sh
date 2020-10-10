@@ -94,7 +94,7 @@ kubeseal --format=yaml --cert="$PUB_CERT" \
 # Traefik Basic Auth - linkerd Namespace
 kubectl create secret generic traefik-basic-auth \
   --from-literal=auth="$TRAEFIK_BASIC_AUTH" \
-  --namespace kube-system --dry-run=client -o json \
+  --namespace linkerd --dry-run=client -o json \
   | \
 kubeseal --format=yaml --cert="$PUB_CERT" \
     > "$REPO_ROOT"/deployments/linkerd/basic-auth-linkerd.yaml
