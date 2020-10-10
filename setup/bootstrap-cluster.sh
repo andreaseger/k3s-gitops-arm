@@ -11,8 +11,8 @@ USER="ane"
 K3S_VERSION="v1.19.2+k3s1"
 
 REPO_ROOT=$(git rev-parse --show-toplevel)
-REPO_BRANCH=$(git symbolic-ref HEAD ^/dev/null | sed -e 's|^refs/heads/||')
-ANSIBLE_INVENTORY="${REPO_ROOT}"/ansible/inventory
+REPO_BRANCH=$(git symbolic-ref HEAD 2>/dev/null | sed -e 's|^refs/heads/||')
+ANSIBLE_INVENTORY="${REPO_ROOT}/ansible/inventory"
 
 die() { echo "$*" 1>&2 ; exit 1; }
 need() {
@@ -28,12 +28,21 @@ need "ansible-inventory"
 need "jq"
 
 K3S_MASTER=$(ansible-inventory -i ${ANSIBLE_INVENTORY} --list | jq -r '.k3s_master[] | @tsv')
-K3S_WORKERS=$(ansible-inventory -i ${ANSIBLE_INVENTORY} --list | jq -r '.k3s_worker[] | @tsv')
+# K3S_WORKERS=$(ansible-inventory -i ${ANSIBLE_INVENTORY} --list | jq -r '.k3s_worker[] | @tsv')
 
 message() {
   echo -e "\n######################################################################"
   echo "# ${1}"
   echo "######################################################################"
+}
+
+prepNodes() {
+    message "Prepare Nodes via ansible"
+    export ANSIBLE_CONFIG=ansible/ansible.cfg
+    ansible-playbook \
+        -i ansible/inventory \
+        ansible/playbook.yml
+    sleep 5
 }
 
 k3sMasterNode() {
@@ -71,8 +80,15 @@ ks3WorkerNodes() {
 installSealedSecrets(){
     message "Installing sealed-secrets"
 
-    kubectl apply -f "${REPO_ROOT}"/deployments/kube-system/sealed-secrets.yaml
+    kubectl apply -f "${REPO_ROOT}"/deployments/kube-system/sealed-secrets/sealed-secrets.yaml
 
+    SEALED_SECRETS_READY=1
+    while [ ${SEALED_SECRETS_READY} != 0 ]; do
+        echo "Waiting for sealed-secrets job to be done..."
+        kubectl -n kube-system wait --for condition=complete job.batch/helm-install-sealed-secrets
+        SEALED_SECRETS_READY="$?"
+        sleep 5
+    done
     SEALED_SECRETS_READY=1
     while [ ${SEALED_SECRETS_READY} != 0 ]; do
         echo "Waiting for sealed-secrets pod to be fully ready..."
@@ -80,6 +96,7 @@ installSealedSecrets(){
         SEALED_SECRETS_READY="$?"
         sleep 5
     done
+        
     sleep 5
 
     pushd ${REPO_ROOT}/secrets
@@ -120,8 +137,9 @@ addDeployKey() {
     #"${REPO_ROOT}"/setup/add-repo-key.sh "${FLUX_KEY}"
 }
 
-k3sMasterNode
-ks3WorkerNodes
+#prepNodes
+#k3sMasterNode
+# ks3WorkerNodes
 installSealedSecrets
 installFlux
 addDeployKey
