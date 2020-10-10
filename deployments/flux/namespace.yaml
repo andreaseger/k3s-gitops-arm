@@ -4,4 +4,4 @@ kind: Namespace
 metadata:
   name: flux
   annotations:
-    linkerd.io/inject: enabled
+    linkerd.io/inject: disable
