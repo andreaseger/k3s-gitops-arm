@@ -14,5 +14,5 @@ spec:
       http:
         paths:
           - backend:
-              serviceName: linkerd-web
-              servicePort: 8084
+              name: linkerd-web
+              port: 8084
