@@ -11,6 +11,7 @@ USER="ane"
 K3S_VERSION="v1.19.2+k3s1"
 
 REPO_ROOT=$(git rev-parse --show-toplevel)
+REPO_BRANCH=$(git symbolic-ref HEAD ^/dev/null | sed -e 's|^refs/heads/||')
 ANSIBLE_INVENTORY="${REPO_ROOT}"/ansible/inventory
 
 need() {
@@ -72,7 +73,7 @@ installSealedSecrets(){
     kubectl apply -f "${REPO_ROOT}"/deployments/kube-system/sealed-secrets.yaml
 
     SEALED_SECRETS_READY=1
-    while [ ${FLUX_READY} != 0 ]; do
+    while [ ${SEALED_SECRETS_READY} != 0 ]; do
         echo "Waiting for sealed-secrets pod to be fully ready..."
         kubectl -n kube-system wait --for condition=available deployment/sealed-secrets
         SEALED_SECRETS_READY="$?"
@@ -85,6 +86,8 @@ installSealedSecrets(){
         kubeseal --controller-name sealed-secrets --fetch-cert > ./pub-cert.pem
         ./generate-secrets.sh
     popd
+    git commit -v -a -m "Bootstrap: regenerate secrets"
+    git push -u origin $REPO_BRANCH
 }
 
 installFlux() {
@@ -110,9 +113,10 @@ installFlux() {
 addDeployKey() {
     # grab output the key
     FLUX_KEY=$(kubectl -n flux logs deployment/flux | grep identity.pub | cut -d '"' -f2)
+    echo FLUX_KEY
 
-    message "Adding the key to github automatically"
-    "${REPO_ROOT}"/setup/add-repo-key.sh "${FLUX_KEY}"
+    # message "Adding the key to github automatically"
+    #"${REPO_ROOT}"/setup/add-repo-key.sh "${FLUX_KEY}"
 }
 
 k3sMasterNode
