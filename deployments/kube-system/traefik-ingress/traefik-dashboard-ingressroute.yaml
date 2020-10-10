@@ -1,0 +1,28 @@
+apiVersion: traefik.containo.us/v1alpha1
+kind: Middleware
+metadata:
+  name: l5d-header-middleware-traefik-dashboard
+  namespace: kube-system
+spec:
+  headers:
+    customRequestHeaders:
+      l5d-dst-override: "traffic-ingress.kube-system.svc.cluster.local:9000"
+---
+apiVersion: traefik.containo.us/v1alpha1
+kind: IngressRoute
+metadata:
+  name: traefik-dashboard
+  namespace: kube-system
+spec:
+  routes:
+  - match: Host(`traefik.home.a6.io`) && (PathPrefix(`/api`) || PathPrefix(`/dashboard`))
+    kind: Rule
+    services:
+    - name: traefik-ingress
+      kind: Service
+      port: 9000
+    # - name: api@internal
+    #   kind: TraefikService
+    middlewares:
+      - name: traefik-basic-auth
+      - name: l5d-header-middleware-traefik-dashboard
