@@ -1,34 +1,19 @@
 ---
-apiVersion: v1
-kind: Service
+apiVersion: traefik.containo.us/v1alpha1
+kind: IngressRoute
 metadata:
-  name: traefik-dashboard
-  namespace: kube-system
-spec:
-  ports:
-    - name: http
-      protocol: TCP
-      targetPort: 9000
-  selector:
-    app.kubernetes.io/name: traefik
-  type: ClusterIP
----
-apiVersion: networking.k8s.io/v1
-kind: Ingress
-metadata:
-  name: traefik-dashboard
-  namespace: kube-system
   annotations:
-    kubernetes.io/ingress.class: "traefik"
-    traefik.ingress.kubernetes.io/auth-type: basic
-    traefik.ingress.kubernetes.io/auth-secret: traefik-basic-auth
-    # traefik.ingress.kubernetes.io/app-root: /dashboard/
-    ingress.kubernetes.io/custom-request-headers: l5d-dst-override:traefik-dashboard.kube-system.svc.cluster.local:9000
+    kubernetes.io/ingress.class: traefik
+  name: traefik-dashboard
+  namespace: kube-system
 spec:
-  rules:
-    - host: traefik.home.a6.io
-      http:
-        paths:
-            backend:
-              name: traefik-dashboard
-              port: 9000
+  entryPoints: ["web"]
+  routes:
+  - kind: Rule
+    match: Host(`traefik.home.a6.io`)
+    priority: 0
+    middlewares:
+    - name: traefik-basic-auth
+    services:
+    - name: api@internal
+      kind: TraefikService

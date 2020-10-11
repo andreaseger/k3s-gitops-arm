@@ -1,0 +1,35 @@
+---
+apiVersion: traefik.containo.us/v1alpha1
+kind: Middleware
+metadata:
+  name: l5d-header-middleware
+  namespace: kubernetes-dashboard
+spec:
+  headers:
+    customRequestHeaders:
+      l5d-dst-override: "l5d-dst-override:kubernetes-dashboard.kubernetes-dashboard.svc.cluster.local:443"
+      # Host: 'kubernetes-dashboard.kubernetes-dashboard.svc.cluster.local:443'
+---
+apiVersion: traefik.containo.us/v1alpha1
+kind: IngressRouteTCP
+metadata:
+  annotations:
+    kubernetes.io/ingress.class: traefik
+  name: kubernetes-dashboard-ingress-route
+  namespace: kubernetes-dashboard
+spec:
+  entryPoints: ["websecure"]
+  routes:
+  - kind: Rule
+    match: HostSNI(`k8s.home.a6.io`)
+    priority: 0
+    middlewares:
+    - name: l5d-header-middleware
+    services:
+    - kind: Service
+      name: kubernetes-dashboard
+      port: 443
+  tls:
+    domains:
+      - main: k8s.home.a6.io
+    passthrough: true

@@ -1,18 +1,32 @@
-apiVersion: networking.k8s.io/v1
-kind: Ingress
+---
+apiVersion: traefik.containo.us/v1alpha1
+kind: Middleware
 metadata:
-  name: web-ingress
+  name: l5d-header-middleware
   namespace: linkerd
-  annotations:
-    kubernetes.io/ingress.class: "traefik"
-    ingress.kubernetes.io/custom-request-headers: l5d-dst-override:linkerd-web.linkerd.svc.cluster.local:8084
-    traefik.ingress.kubernetes.io/auth-type: basic
-    traefik.ingress.kubernetes.io/auth-secret: traefik-basic-auth
 spec:
-  rules:
-    - host: linkerd.home.a6.io
-      http:
-        paths:
-          - backend:
-              name: linkerd-web
-              port: 8084
+  headers:
+    customRequestHeaders:
+      l5d-dst-override: "l5d-dst-override:linkerd-web.linkerd.svc.cluster.local:8084"
+      Host: 'linkerd-web.linkerd.svc.cluster.local:8084'
+---
+apiVersion: traefik.containo.us/v1alpha1
+kind: IngressRoute
+metadata:
+  annotations:
+    kubernetes.io/ingress.class: traefik
+  name: web-ingress-route
+  namespace: linkerd
+spec:
+  entryPoints: ["web"]
+  routes:
+  - kind: Rule
+    match: Host(`linkerd.home.a6.io`)
+    priority: 0
+    middlewares:
+    - name: l5d-header-middleware
+    - name: traefik-basic-auth
+    services:
+    - kind: Service
+      name: linkerd-web
+      port: 8084
