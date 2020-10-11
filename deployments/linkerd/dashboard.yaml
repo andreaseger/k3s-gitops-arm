@@ -19,7 +19,7 @@ metadata:
   namespace: linkerd
 spec:
   # entryPoints: ["web"]
-  # entryPoints: ["websecure"]
+  entryPoints: ["websecure"]
   routes:
   - kind: Rule
     match: Host(`linkerd.home.a6.io`)
@@ -33,6 +33,6 @@ spec:
       port: 8084
   tls:
     certResolver: le
-    domains:
-      - main: "*.home.a6.io"
-        sans: ["home.a6.io"]
+    # domains:
+    #   - main: "*.home.a6.io"
+    #     sans: ["home.a6.io"]
