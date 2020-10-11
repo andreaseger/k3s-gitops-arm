@@ -22,6 +22,7 @@ metadata:
     kubernetes.io/ingress.class: "traefik"
     traefik.ingress.kubernetes.io/auth-type: basic
     traefik.ingress.kubernetes.io/auth-secret: traefik-basic-auth
+    # traefik.ingress.kubernetes.io/app-root: /dashboard/
     ingress.kubernetes.io/custom-request-headers: l5d-dst-override:traefik-dashboard.kube-system.svc.cluster.local:9000
 spec:
   rules:

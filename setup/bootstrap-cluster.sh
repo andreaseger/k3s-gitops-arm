@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-
+set -e
 # Modified with credit to: billimek@github
 
 #
