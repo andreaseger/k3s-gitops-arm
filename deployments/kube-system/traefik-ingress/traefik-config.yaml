@@ -6,7 +6,7 @@ metadata:
 data:
   dynamic.yaml: |
     certificatesResolvers:
-      myresolver:
+      staging:
         acme:
           email: $ACME_EMAIL
           storage: "/data/acme.json"
