@@ -140,7 +140,7 @@ installFlux() {
 addDeployKey() {
     # grab output the key
     FLUX_KEY=$(kubectl -n flux logs deployment/flux | grep identity.pub | cut -d '"' -f2)
-    echo FLUX_KEY
+    echo $FLUX_KEY
 
     # message "Adding the key to github automatically"
     #"${REPO_ROOT}"/setup/add-repo-key.sh "${FLUX_KEY}"
