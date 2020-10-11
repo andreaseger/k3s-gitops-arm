@@ -1,0 +1,34 @@
+---
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: local-media-pv
+spec:
+  capacity:
+    storage: 50Gi
+  accessModes:
+    - ReadWriteMany
+  persistentVolumeReclaimPolicy: Retain
+  storageClassName: native-local-storage
+  local:
+    path: /pv/media
+  nodeAffinity:
+    required:
+      nodeSelectorTerms:
+      - matchExpressions:
+        - key: kubernetes.io/hostname
+          operator: In
+          values:
+          - home
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: local-media-pvc
+spec:
+  accessModes:
+    - ReadWriteMany
+  storageClassName: native-local-storage
+  resources:
+    requests:
+      storage: 50Gi

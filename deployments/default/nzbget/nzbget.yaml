@@ -5,7 +5,7 @@ metadata:
   name: nzbget
   namespace: default
   annotations:
-    fluxcd.io/ignore: "true"
+    fluxcd.io/ignore: "false"
     fluxcd.io/automated: "false"
 spec:
   releaseName: nzbget
@@ -32,7 +32,10 @@ spec:
         enabled: false
       extraMounts:
         - name: media
-          claimName: nfs-media-pvc
+          claimName: local-media-pvc
+        - name: downloads
+          claimName: local-data-pvc
+
     resources:
       requests:
         memory: 300Mi

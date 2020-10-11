@@ -3,6 +3,8 @@ ingress:
   annotations:
     traefik.ingress.kubernetes.io/router.middlewares: default-redirect-to-https@kubernetescrd
     traefik.ingress.kubernetes.io/router.tls.certresolver: le
+    traefik.ingress.kubernetes.io/router.tls.domains.0.main: "*.home.a6.io"
+    traefik.ingress.kubernetes.io/router.tls.domains.0.sans: "home.a6.io"
   tls:
   - hosts:
     - hydra.$DOMAIN

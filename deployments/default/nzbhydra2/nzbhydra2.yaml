@@ -17,6 +17,9 @@ spec:
     name: nzbhydra2
     version: 3.0.1
   values:
+    image:
+      repository: linuxserver/nzbhydra2
+      tag: v2.29.1-ls17
     ingress:
       enabled: true
       annotations:

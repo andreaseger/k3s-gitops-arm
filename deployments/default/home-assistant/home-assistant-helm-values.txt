@@ -1,7 +1,12 @@
 vscode:
   ingress:
     hosts:
-    - "hass-editor.$DOMAIN"
+      - "hass-editor.$DOMAIN"
+    annotations:
+      traefik.ingress.kubernetes.io/router.middlewares: default-redirect-to-https@kubernetescrd
+      traefik.ingress.kubernetes.io/router.tls.certresolver: le
+      traefik.ingress.kubernetes.io/router.tls.domains.0.main: "*.home.a6.io"
+      traefik.ingress.kubernetes.io/router.tls.domains.0.sans: "home.a6.io"
     tls:
     - hosts:
       - "hass-editor.$DOMAIN"
@@ -9,6 +14,11 @@ vscode:
     HASS_TOKEN: "${HASS_TOKEN}"
 ingress:
   hosts: [hass.$DOMAIN]
+  annotations:
+    traefik.ingress.kubernetes.io/router.middlewares: default-redirect-to-https@kubernetescrd
+    traefik.ingress.kubernetes.io/router.tls.certresolver: le
+    traefik.ingress.kubernetes.io/router.tls.domains.0.main: "*.home.a6.io"
+    traefik.ingress.kubernetes.io/router.tls.domains.0.sans: "home.a6.io"
   tls:
   - hosts:
     - hass.$DOMAIN  
