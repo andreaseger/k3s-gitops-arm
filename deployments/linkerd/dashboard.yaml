@@ -33,6 +33,6 @@ spec:
       port: 8084
   tls:
     certResolver: le
-    # domains:
-    #   - main: "*.home.a6.io"
-    #     sans: ["home.a6.io"]
+    domains:
+      - main: "*.home.a6.io"
+        sans: ["home.a6.io"]
