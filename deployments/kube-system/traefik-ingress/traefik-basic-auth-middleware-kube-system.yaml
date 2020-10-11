@@ -4,6 +4,8 @@ kind: Middleware
 metadata:
   name: traefik-basic-auth
   namespace: kube-system
+  annotations:
+    fluxcd.io/ignore: "true"
 spec:
   basicAuth:
     secret: traefik-basic-auth

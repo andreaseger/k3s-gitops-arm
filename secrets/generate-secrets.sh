@@ -44,26 +44,19 @@ kubectl create secret generic traefik-secret \
 kubeseal --format=yaml --cert="$PUB_CERT" \
     > "$REPO_ROOT"/deployments/kube-system/traefik-ingress/traefik-secret.yaml
 
-# Traefik Basic Auth - default Namespace
-kubectl create secret generic traefik-basic-auth \
-  --from-literal=auth="$TRAEFIK_BASIC_AUTH" \
-  --namespace default --dry-run=client -o json \
-  | \
-kubeseal --format=yaml --cert="$PUB_CERT" \
-    > "$REPO_ROOT"/deployments/kube-system/traefik-ingress/basic-auth-default.yaml
+# # Traefik Basic Auth - default Namespace
+# kubectl create secret generic traefik-basic-auth \
+#   --from-literal=auth="$TRAEFIK_BASIC_AUTH" \
+#   --namespace default --dry-run=client -o json \
+#   | \
+# kubeseal --format=yaml --cert="$PUB_CERT" \
+#     > "$REPO_ROOT"/deployments/kube-system/traefik-ingress/basic-auth-default.yaml
 
-# Traefik Basic Auth - kube-system Namespace
-kubectl create secret generic traefik-basic-auth \
-  --from-literal=auth="$TRAEFIK_BASIC_AUTH" \
-  --namespace kube-system --dry-run=client -o json \
-  | \
-kubeseal --format=yaml --cert="$PUB_CERT" \
-    > "$REPO_ROOT"/deployments/kube-system/traefik-ingress/basic-auth-kube-system.yaml
+# # Traefik Basic Auth - kube-system Namespace
+# kubectl create secret generic traefik-basic-auth \
+#   --from-literal=auth="$TRAEFIK_BASIC_AUTH" \
+#   --namespace kube-system --dry-run=client -o json \
+#   | \
+# kubeseal --format=yaml --cert="$PUB_CERT" \
+#     > "$REPO_ROOT"/deployments/kube-system/traefik-ingress/basic-auth-kube-system.yaml
 
-# Traefik Basic Auth - linkerd Namespace
-kubectl create secret generic traefik-basic-auth \
-  --from-literal=auth="$TRAEFIK_BASIC_AUTH" \
-  --namespace linkerd --dry-run=client -o json \
-  | \
-kubeseal --format=yaml --cert="$PUB_CERT" \
-    > "$REPO_ROOT"/deployments/linkerd/basic-auth-linkerd.yaml

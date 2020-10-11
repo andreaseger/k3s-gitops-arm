@@ -19,25 +19,39 @@ spec:
   forceUpgrade: true
   values:
     nzbget:
-      timezone: "Europe/Vienna"
-      puid: 1000
-      pgid: 100
       ingress:
         enabled: true
+        hosts: 
+          - host: nzbget.home.a6.io
+            paths: ["/"]
         annotations:
           kubernetes.io/ingress.class: "traefik"
+          traefik.ingress.kubernetes.io/router.middlewares: default-redirect-to-https@kubernetescrd
+          traefik.ingress.kubernetes.io/router.tls.certresolver: le
+          traefik.ingress.kubernetes.io/router.tls.domains.0.main: "*.home.a6.io"
+          traefik.ingress.kubernetes.io/router.tls.domains.0.sans: "home.a6.io"
+          traefik.ingress.kubernetes.io/router.tls: "true"
+        tls:
+          - hosts:
+            - nzbget.home.a6.io
+      timezone: "Europe/Vienna"
+      env:
+        DEBUG: "true"
+      puid: 1000
+      pgid: 100
       persistence:
         config:
           enabled: true
           storageClass: "local-path"
-        downloads:
-          enabled: true
-          storageClass: "-"
-          accessMode: ReadWriteMany
-        additionalVolumes:
-          - name: downloads
-            persistentVolumeClaim:
-              claimName: local-data-pvc
+        # downloads:
+        #   enabled: true
+        #   storageClass: "-"
+        #   size: 20Gi
+        #   accessMode: ReadWriteMany
+        # additionalVolumes:
+        #   - name: downloads
+        #     persistentVolumeClaim:
+        #       claimName: local-data-pvc
         # media:
         #   enabled: true
         #   storageClass: "-"
@@ -48,5 +62,5 @@ spec:
           cpu: 25m
         limits:
           memory: 1000Mi
-  valueFileSecrets:
-  - name: "nzbget-helm-values"
+  # valueFileSecrets:
+  # - name: "nzbget-helm-values"

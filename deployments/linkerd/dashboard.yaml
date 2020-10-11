@@ -24,6 +24,7 @@ apiVersion: traefik.containo.us/v1alpha1
 kind: IngressRoute
 metadata:
   annotations:
+    fluxcd.io/ignore: "true"
     kubernetes.io/ingress.class: traefik
   name: web-ingress-route
   namespace: linkerd
