@@ -16,35 +16,37 @@ spec:
     repository: https://k8s-at-home.com/charts/
     name: nzbget
     version: 5.0.0
+  forceUpgrade: true
   values:
-    timezone: "Europe/Vienna"
-    puid: 1000
-    pgid: 100
-    ingress:
-      enabled: true
-      annotations:
-        kubernetes.io/ingress.class: "traefik"
-    persistence:
-      config:
+    nzbget:
+      timezone: "Europe/Vienna"
+      puid: 1000
+      pgid: 100
+      ingress:
         enabled: true
-        storageClass: "local-path"
-      downloads:
-        enabled: true
-        storageClass: "-"
-        accessMode: ReadWriteMany
-      additionalVolumes:
-        - name: downloads
-          persistentVolumeClaim:
-            claimName: local-data-pvc
-      # media:
-      #   enabled: true
-      #   storageClass: "-"
-      #   existingClaim: local-media-pvc
-    resources:
-      requests:
-        memory: 300Mi
-        cpu: 25m
-      limits:
-        memory: 1000Mi
+        annotations:
+          kubernetes.io/ingress.class: "traefik"
+      persistence:
+        config:
+          enabled: true
+          storageClass: "local-path"
+        downloads:
+          enabled: true
+          storageClass: "-"
+          accessMode: ReadWriteMany
+        additionalVolumes:
+          - name: downloads
+            persistentVolumeClaim:
+              claimName: local-data-pvc
+        # media:
+        #   enabled: true
+        #   storageClass: "-"
+        #   existingClaim: local-media-pvc
+      resources:
+        requests:
+          memory: 300Mi
+          cpu: 25m
+        limits:
+          memory: 1000Mi
   valueFileSecrets:
   - name: "nzbget-helm-values"
