@@ -84,6 +84,7 @@ installSealedSecrets(){
     kubectl apply -f "${REPO_ROOT}"/deployments/kube-system/sealed-secrets/controller.yaml
 
     sleep 5
+    set +e
 
     SEALED_SECRETS_READY=1
     while [ ${SEALED_SECRETS_READY} != 0 ]; do
@@ -94,10 +95,11 @@ installSealedSecrets(){
     done
         
     sleep 5
+    set -e
 
     pushd ${REPO_ROOT}/secrets
         message "updating sealedsecrets"
-        kubeseal --controller-name sealed-secrets --fetch-cert > ./pub-cert.pem
+        kubeseal --controller-name sealed-secrets-controller --fetch-cert > ./pub-cert.pem
         ./generate-secrets.sh
     popd
     git commit -v -a -m "Bootstrap: regenerate secrets"
@@ -122,6 +124,8 @@ installFlux() {
     helm upgrade --install flux --values "${REPO_ROOT}"/deployments/flux/flux/flux-values.yaml --namespace flux fluxcd/flux
     helm upgrade --install helm-operator --values "${REPO_ROOT}"/deployments/flux/helm-operator/helm-operator-values.yaml --namespace flux fluxcd/helm-operator
 
+    set +e
+
     FLUX_READY=1
     while [ ${FLUX_READY} != 0 ]; do
         echo "Waiting for flux pod to be fully ready..."
@@ -129,6 +133,7 @@ installFlux() {
         FLUX_READY="$?"
         sleep 5
     done
+    set -e
     sleep 5
 }
 
