@@ -32,14 +32,7 @@ spec:
     ingressRoute:
       dashboard:
         enabled: false
-    volumes:
-      - name: traefik-configs
-        mountPath: "/config"
-        type: configMap
-    additionalArguments:
-      - "--providers.file.filename=/config/dynamic.yaml"
     service:
-      # loadBalancerIP: 192.168.1.5
       externalTrafficPolicy: Local
     resources:
       requests:
@@ -54,3 +47,5 @@ spec:
           secretKeyRef:
             name: traefik-secret
             key: gandi-api-key
+  valueFileSecrets:
+  - name: "traefik-config-helm-values"

@@ -1,0 +1,6 @@
+additionalArguments:
+  - --certificatesresolvers.le.acme.dnschallenge
+  - --certificatesresolvers.le.acme.email=$ACME_EMAIL
+  - --certificatesresolvers.le.acme.storage=/data/acme.json
+  - --certificatesresolvers.le.acme.caserver=https://acme-staging-v02.api.letsencrypt.org/directory
+  - --certificatesresolvers.le.acme.dnschallenge.provider=gandiv5

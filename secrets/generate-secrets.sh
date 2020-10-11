@@ -14,13 +14,9 @@ need "kubectl"
 need "sed"
 need "envsubst"
 
-if [ "$(uname)" == "Darwin" ]; then
-  set -a
-  . "${REPO_ROOT}/secrets/.secrets.env"
-  set +a
-else
-  . "${REPO_ROOT}/secrets/.secrets.env"
-fi
+set -o allexport
+source "${REPO_ROOT}/secrets/.secrets.env"
+set +o allexport
 
 PUB_CERT="${REPO_ROOT}/secrets/pub-cert.pem"
 
@@ -42,11 +38,9 @@ kseal() {
   # Create secret and put it in the applications deployment folder
   # e.g. "deployments/default/pihole/pihole-helm-values.yaml"
   envsubst < "$@" | tee values.yaml \
-    | \
-  kubectl -n "${namespace}" create secret generic "${secret_name}" \
+  | kubectl -n "${namespace}" create secret generic "${secret_name}" \
     --from-file=values.yaml --dry-run=client -o json \
-    | \
-  kubeseal --format=yaml --cert="$PUB_CERT" \
+  | kubeseal --format=yaml --cert="$PUB_CERT" \
     > "${secret}.yaml"
   # Clean up temp file
   rm values.yaml
@@ -62,6 +56,7 @@ kseal "${REPO_ROOT}/deployments/default/nzbget/nzbget-helm-values.txt"
 kseal "${REPO_ROOT}/deployments/default/nzbhydra2/nzbhydra2-helm-values.txt"
 kseal "${REPO_ROOT}/deployments/default/home-assistant/home-assistant-db-helm-values.txt"
 kseal "${REPO_ROOT}/deployments/default/home-assistant/home-assistant-helm-values.txt"
+kseal "${REPO_ROOT}/deployments/kube-system/traefik-ingress/traefik-config-helm-values.txt"
 
 #
 # Generic Secrets
