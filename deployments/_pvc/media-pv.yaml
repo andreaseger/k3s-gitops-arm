@@ -29,6 +29,7 @@ spec:
   accessModes:
     - ReadWriteMany
   storageClassName: native-local-storage
+  volumeName: local-media-pv
   resources:
     requests:
       storage: 50Gi

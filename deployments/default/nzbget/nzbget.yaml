@@ -29,9 +29,11 @@ spec:
         enabled: true
         storageClass: "local-path"
       downloads:
-        enabled: true
-        storageClass: "-"
-        existingClaim: local-data-pvc
+        enabled: false
+      additionalVolumes:
+        - name: downloads
+          persistentVolumeClaim:
+            claimName: local-data-pvc
       media:
         enabled: true
         storageClass: "-"
