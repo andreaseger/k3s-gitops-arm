@@ -11,6 +11,15 @@ spec:
       Host: 'linkerd-web.linkerd.svc.cluster.local:8084'
 ---
 apiVersion: traefik.containo.us/v1alpha1
+kind: Middleware
+metadata:
+  name: redirect-to-https
+spec:
+  redirectScheme:
+    scheme: https
+    permanent: true
+---
+apiVersion: traefik.containo.us/v1alpha1
 kind: IngressRoute
 metadata:
   annotations:
@@ -18,15 +27,13 @@ metadata:
   name: web-ingress-route
   namespace: linkerd
 spec:
-  # entryPoints: ["web"]
-  entryPoints: ["websecure"]
   routes:
   - kind: Rule
     match: Host(`linkerd.home.a6.io`)
     priority: 0
     middlewares:
     - name: l5d-header-middleware
-    - name: traefik-basic-auth
+    - name: redirect-to-https
     services:
     - kind: Service
       name: linkerd-web
