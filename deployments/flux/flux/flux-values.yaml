@@ -5,14 +5,20 @@ git:
   branch: customize
   path: deployments
   readonly: true
+  pollInterval: "1m"
 image:
   repository: raspbernetes/flux
   tag: 1.20.2
 registry:
-  rps: 1
-  burst: 1
+  rps: 5
+  burst: 5
 memcached:
   enabled: true
+  resources:
+    # If you do want to specify resource limits, uncomment the following and adjust values
+    limits:
+      cpu: 100m
+      memory: 628Mi
 syncGarbageCollection:
   enabled: true
   dry: false

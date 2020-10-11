@@ -1,5 +1,8 @@
 ingress:
-  hosts: [nzbhydra2.$DOMAIN]
+  hosts: [hydra.$DOMAIN]
+  annotations:
+    traefik.ingress.kubernetes.io/router.middlewares: redirect-to-https
+    traefik.ingress.kubernetes.io/router.tls.certresolver: le
   tls:
   - hosts:
-    - nzbhydra2.$DOMAIN
+    - hydra.$DOMAIN
