@@ -29,15 +29,17 @@ spec:
         enabled: true
         storageClass: "local-path"
       downloads:
-        enabled: false
+        enabled: true
+        storageClass: "-"
+        accessMode: ReadWriteMany
       additionalVolumes:
         - name: downloads
           persistentVolumeClaim:
             claimName: local-data-pvc
-      media:
-        enabled: true
-        storageClass: "-"
-        existingClaim: local-media-pvc
+      # media:
+      #   enabled: true
+      #   storageClass: "-"
+      #   existingClaim: local-media-pvc
     resources:
       requests:
         memory: 300Mi
