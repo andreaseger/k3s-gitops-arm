@@ -1,6 +1,6 @@
 ingress:
   hosts:
-    - host: pihole.$DOMAIN
+    - pihole.$DOMAIN
   path: "/"
   annotations:
     traefik.ingress.kubernetes.io/router.entrypoints: web,websecure
