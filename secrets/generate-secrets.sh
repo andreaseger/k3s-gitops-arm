@@ -30,6 +30,8 @@ PUB_CERT="${REPO_ROOT}/secrets/pub-cert.pem"
 ./kseal "${REPO_ROOT}/deployments/default/nzbhydra2/nzbhydra2-helm-values.txt"
 ./kseal "${REPO_ROOT}/deployments/default/home-assistant/home-assistant-helm-values.txt"
 ./kseal "${REPO_ROOT}/deployments/default/pihole/pihole-helm-values.txt"
+
+
 ./kseal "${REPO_ROOT}/deployments/kube-system/traefik-ingress/traefik-config-helm-values.txt"
 
 #
