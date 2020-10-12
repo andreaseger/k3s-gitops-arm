@@ -4,5 +4,3 @@ additionalArguments:
   - --certificatesresolvers.le.acme.email=$ACME_EMAIL
   - --certificatesresolvers.le.acme.storage=/data/acme.json
   - --certificatesresolvers.le.acme.dnschallenge.provider=gandiv5
-  - --entryPoints.dnsudp.address=:53/udp
-  - --entryPoints.dnstcp.address=:53

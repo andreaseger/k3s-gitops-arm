@@ -22,6 +22,16 @@ spec:
     ports:
       web:
         redirectTo: websecure
+      dnsudp:
+        port: 8053
+        expose: true
+        exposedPort: 53
+        protocol: UDP
+      dnstcp:
+        port: 8053
+        expose: true
+        exposedPort: 53
+        protocol: TCP
     persistence:
       enabled: true
       storageClass: "local-path"
