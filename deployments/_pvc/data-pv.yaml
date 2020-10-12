@@ -5,7 +5,7 @@ metadata:
   name: local-data-pv
 spec:
   capacity:
-    storage: 20Gi
+    storage: 50Gi
   accessModes:
     - ReadWriteMany
   persistentVolumeReclaimPolicy: Retain
@@ -32,4 +32,4 @@ spec:
   volumeName: local-data-pv
   resources:
     requests:
-      storage: 20Gi
+      storage: 50Gi
