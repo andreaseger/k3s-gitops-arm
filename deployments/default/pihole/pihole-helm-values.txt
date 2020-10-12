@@ -13,3 +13,4 @@ ingress:
       - pihole.$DOMAIN
 whitelist:
   - pihole.$DOMAIN
+virtualHost: pihole.$DOMAIN
