@@ -29,16 +29,12 @@ spec:
       persistence:
         config:
           enabled: true
+          size: 128Mi
           storageClass: "local-path"
-        downloads:
-          enabled: true
-          storageClass: "-"
-          size: 50Gi
-          accessMode: ReadWriteMany
-        additionalVolumes:
-          - name: downloads
-            persistentVolumeClaim:
-              claimName: local-data-pvc
+      additionalVolumes:
+        - name: downloads
+          persistentVolumeClaim:
+            claimName: local-data-pvc
       resources:
         requests:
           memory: 300Mi
