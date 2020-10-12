@@ -17,6 +17,8 @@ spec:
     services:
     - name: api@internal
       kind: TraefikService
-  # tls:
-  #   domains:
-  #     - main: traefik.home.a6.io
+  tls:
+    domains:
+      - main: "*.home.a6.io"
+        sans:
+          - home.a6.io
