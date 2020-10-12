@@ -7,7 +7,9 @@ metadata:
   name: traefik-dashboard
   namespace: kube-system
 spec:
-  entryPoints: ["websecure"]
+  entryPoints:
+    - web
+    - websecure
   routes:
   - kind: Rule
     match: Host(`traefik.home.a6.io`)

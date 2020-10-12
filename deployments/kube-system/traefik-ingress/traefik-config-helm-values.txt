@@ -1,4 +1,6 @@
 additionalArguments:
+  - --entrypoints.web.http.redirections.entryPoint.to=websecure
+  - --entrypoints.websecure.http.tls.certResolver=le
   - --certificatesresolvers.le.acme.dnschallenge
   - --certificatesresolvers.le.acme.email=$ACME_EMAIL
   - --certificatesresolvers.le.acme.storage=/data/acme.json

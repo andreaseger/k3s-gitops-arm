@@ -21,6 +21,7 @@ spec:
       isDefaultClass: true
     persistence:
       enabled: true
+      size: 64Mi
       storageClass: "local-path"
     logs:
       access:

@@ -22,7 +22,7 @@ spec:
       TZ: "Europe/Vienna"
     persistence:
       enabled: true
-      size: 10Gi
+      size: 5Gi
       storageClass: "local-path"
     ingress:
       enabled: true
@@ -35,11 +35,11 @@ spec:
     #   - 192.168.69.105
     #   externalTrafficPolicy: Local
     hostNetwork: true
-    probes:
-      liveness:
-        enabled: false
-      readiness:
-        enabled: false
+    # probes:
+    #   liveness:
+    #     enabled: false
+    #   readiness:
+    #     enabled: false
     # @CHANGEME: do I actually need this?
     # vscode:
     #   enabled: true
