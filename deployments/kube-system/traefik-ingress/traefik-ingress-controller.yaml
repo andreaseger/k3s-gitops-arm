@@ -24,7 +24,7 @@ spec:
       storageClass: "local-path"
     logs:
       access:
-        enable: true
+        enabled: true
     ingressRoute:
       dashboard:
         enabled: false
