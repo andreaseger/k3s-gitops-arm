@@ -1,0 +1,42 @@
+---
+apiVersion: helm.fluxcd.io/v1
+kind: HelmRelease
+metadata:
+  name: pihole
+  namespace: default
+  annotations:
+    fluxcd.io/ignore: "false"
+    fluxcd.io/automated: "false"
+spec:
+  releaseName: pihole
+  helmVersion: v3
+  rollback:
+    enable: true
+  chart:
+    repository: https://mojo2600.github.io/pihole-kubernetes/
+    name: pihole
+    version: 1.7.17
+  values:
+    serviceTCP:
+      type: ClusterIP
+    serviceUDP:
+      type: ClusterIP
+    ingress:
+      enabled: true
+      annotations:
+        kubernetes.io/ingress.class: "traefik"
+    persistentVolumeClaim:
+      enabled: true
+      storageClass: "local-path"
+    extraEnvVars:
+      TZ: "Europe/Vienna"
+    DNS1: "1.1.1.1"
+    DNS2: "8.8.8.8"
+    resources:
+      requests:
+        memory: 128Mi
+        cpu: 150m
+      limits:
+        memory: 512Mi
+  valueFileSecrets:
+    - name: "pihole-helm-values"
