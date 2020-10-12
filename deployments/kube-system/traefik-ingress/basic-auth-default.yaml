@@ -1,0 +1,15 @@
+apiVersion: bitnami.com/v1alpha1
+kind: SealedSecret
+metadata:
+  creationTimestamp: null
+  name: traefik-basic-auth
+  namespace: default
+spec:
+  encryptedData:
+    auth: AgA2fgtiVNVY1Jh0m5yeSqbG9Mzd4mqyIooaUxxKYHSgEATbW9sSRBn5GAbBrJNnf61khzENOgnWaTURwTq8XRtcfyzD+7pHuL4gJlx6AA+4ctiEWUdMvMNtnGwV/w9R2vPdIFW7WtUVmo5XYoZ2vTlx53e3RQP6RpBkingopncVM4ppTs464za63+pm17KY9voI7LzPWQJZHpFvR3dv0CrtLbb/8nhiw8dej9ytuIZ2ihd/SE0NeaON2jYO701uCKTcTybzIbAgA+KEysp+GUIitC/daF2bj9Qgeex4vLkd6b73K6DXmsdTd3jayN7CTwh161GHR+xOo7TpCHp3ja+jXRt1l0bZ9/jSEKnhQouXZcIVQflf8nvUDZxs48M7kMFId5sNgM2f6XmjjSlJXuXGw7nZlH9zB7/eIUBoJfkQPr04jsc9CxFlhI+pbbyW0CfHo2pynMvlEboom14zhj+eBpmu9hSo1xTUtRpSehe9rPg12vIBOczklcqmAABNy62/bEPo97oNYwIbjRPCvAWBdj8df62SZFMm4bVLRiNdCNG92mwjDlPl+L3dzT7orHnzeC4JZVY/SKMv3axbjQrq4Cw+UPj6pid1J/jjXKPiaMfvrT0CXUzHhIaYMDekuv43CKhyrrEXpWqk+zco4JwsNmuv9je9ZAot9+Tvb5fnwRhWE2cEoMJxQQqN0vkQp/cHgaKkUiCItZ3EytzIaRdDfuyTY7LxKk9nUcEHBFV3okIwMyGQWa3vHnrP
+  template:
+    metadata:
+      creationTimestamp: null
+      name: traefik-basic-auth
+      namespace: default
+
