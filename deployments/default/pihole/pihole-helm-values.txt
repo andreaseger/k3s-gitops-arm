@@ -11,3 +11,5 @@ ingress:
   tls:
     - hosts:
       - pihole.$DOMAIN
+whitelist:
+  - pihole.$DOMAIN
