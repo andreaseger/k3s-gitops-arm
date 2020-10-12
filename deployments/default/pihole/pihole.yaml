@@ -10,7 +10,7 @@ metadata:
 spec:
   releaseName: pihole
   helmVersion: v3
-  forceUpgrade: true
+  forceUpgrade: false
   rollback:
     enable: true
   chart:
