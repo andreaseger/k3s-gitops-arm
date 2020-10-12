@@ -22,6 +22,9 @@ spec:
     persistence:
       enabled: true
       storageClass: "local-path"
+    logs:
+      access:
+        enable: true
     ingressRoute:
       dashboard:
         enabled: false

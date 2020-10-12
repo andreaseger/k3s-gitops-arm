@@ -3,6 +3,8 @@ apiVersion: traefik.containo.us/v1alpha1
 kind: Middleware
 metadata:
   name: l5d-header-middleware
+  annotations:
+    fluxcd.io/ignore: "true"
   namespace: linkerd
 spec:
   headers:
@@ -14,6 +16,8 @@ apiVersion: traefik.containo.us/v1alpha1
 kind: Middleware
 metadata:
   name: redirect-to-https
+  annotations:
+    fluxcd.io/ignore: "true"
   namespace: linkerd
 spec:
   redirectScheme:
