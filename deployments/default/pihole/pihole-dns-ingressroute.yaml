@@ -27,7 +27,7 @@ metadata:
   namespace: default
 spec:
   entryPoints: 
-    - dnsupd
+    - dnsudp
   routes:
   - kind: Rule
     match: HostSNI(`pihole.home.a6.io`)
