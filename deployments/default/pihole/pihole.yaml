@@ -35,9 +35,9 @@ spec:
     DNS2: "8.8.8.8"
     resources:
       requests:
-        memory: 128Mi
-        cpu: 150m
+        memory: 32Mi
+        cpu: 50m
       limits:
-        memory: 512Mi
+        memory: 128Mi
   valueFileSecrets:
     - name: "pihole-helm-values"
