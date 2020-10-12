@@ -10,6 +10,7 @@ metadata:
 spec:
   releaseName: nzbhydra2
   helmVersion: v3
+  forceUpgrade: false
   rollback:
     enable: false
   chart:
