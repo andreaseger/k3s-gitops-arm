@@ -7,7 +7,7 @@ metadata:
   name: traefik-dashboard
   namespace: kube-system
 spec:
-  # entryPoints: ["web"]
+  entryPoints: ["websecure"]
   routes:
   - kind: Rule
     match: Host(`traefik.home.a6.io`)
@@ -17,3 +17,6 @@ spec:
     services:
     - name: api@internal
       kind: TraefikService
+  # tls:
+  #   domains:
+  #     - main: traefik.home.a6.io
