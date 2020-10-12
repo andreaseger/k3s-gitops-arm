@@ -21,7 +21,7 @@ spec:
     serviceTCP:
       type: ClusterIP
     serviceUDP:
-      type: ClusterIP
+      type: LoadBalancer
     ingress:
       enabled: true
       annotations:
