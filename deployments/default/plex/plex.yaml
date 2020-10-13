@@ -23,13 +23,18 @@ spec:
       repository: linuxserver/plex
       tag: version-1.20.2.3402-0fec14d92
       pullPolicy: IfNotPresent
+    ingress:
+      enabled: true
+      annotations:
+        kubernetes.io/ingress.class: "traefik"
     timezone: Europe/Vienna
     allowedNetworks:
       - 192.168.1.0/24 # outside / host
       - 10.43.0.0/16   # k3s service cluster ips
       - 10.42.0.0/16   # k3s pod ips
-    plexUid: 1000
-    plexGid: 1000
+    extraEnv:
+      - PUID: 1000
+      - PGID: 1000
     persistence:
       transcode:
         enabled: true

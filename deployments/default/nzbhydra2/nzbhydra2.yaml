@@ -10,7 +10,7 @@ metadata:
 spec:
   releaseName: nzbhydra2
   helmVersion: v3
-  forceUpgrade: false
+  forceUpgrade: true
   rollback:
     enable: false
   chart:
@@ -33,7 +33,7 @@ spec:
         enabled: true
         storageClass: "local-path"
         accessMode: ReadWriteOnce
-        size: 512Mi
+        size: 1Gi
     resources:
       requests:
         memory: 256Mi
