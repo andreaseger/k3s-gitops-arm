@@ -12,6 +12,7 @@ spec:
   helmVersion: v3
   rollback:
     enable: true
+  forceUpgrade: false
   chart:
     repository: https://k8s-at-home.com/charts/
     name: sonarr

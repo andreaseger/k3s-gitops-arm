@@ -13,6 +13,7 @@ spec:
   helmVersion: v3
   rollback:
     enable: false
+  forceUpgrade: false
   chart:
     repository: https://k8s-at-home.com/charts/
     name: plex
@@ -29,10 +30,6 @@ spec:
       - 10.42.0.0/16   # k3s pod ips
     plexUid: 1000
     plexGid: 1000
-    plexPreferences:
-      enabled: true
-    extraEnv:
-      PLEX_PREFERENCE_1: "TranscoderCanOnlyRemuxVideo=1"
     persistence:
       transcode:
         enabled: true
