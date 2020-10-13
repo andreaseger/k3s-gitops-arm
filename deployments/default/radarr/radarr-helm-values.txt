@@ -3,7 +3,8 @@ radarr:
     hosts:
       - host: radarr.$DOMAIN
         paths:
-          path: "/"
+          - path: "/"
+            pathType: Prefix
     annotations:
       traefik.ingress.kubernetes.io/router.entrypoints: web,websecure
       traefik.ingress.kubernetes.io/router.tls.certresolver: le
