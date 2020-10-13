@@ -16,7 +16,7 @@ spec:
   chart:
     repository: https://k8s-at-home.com/charts/
     name: home-assistant
-    version: 2.5.0
+    version: 2.5.1
   values:
     extraEnv:
       TZ: "Europe/Vienna"
@@ -29,18 +29,17 @@ spec:
       annotations:
         kubernetes.io/ingress.class: "traefik"
     hostNetwork: true
-    # @CHANGEME: do I actually need this?
-    # vscode:
-    #   enabled: true
-    #   image:
-    #     repository: codercom/code-server
-    #     tag: 3.4.1
-    #   ingress:
-    #     enabled: true
-    #     annotations:
-    #       kubernetes.io/ingress.class: "traefik"
-    #   extraEnv:
-    #     HASS_SERVER: "http://localhost:8123"
+    vscode:
+      enabled: true
+      image:
+        repository: codercom/code-server
+        tag: 3.6.0
+      ingress:
+        enabled: true
+        annotations:
+          kubernetes.io/ingress.class: "traefik"
+      extraEnv:
+        HASS_SERVER: "http://localhost:8123"
     resources:
       limits:
         memory: 1500Mi
