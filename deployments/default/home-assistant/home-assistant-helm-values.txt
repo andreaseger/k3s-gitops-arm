@@ -1,7 +1,6 @@
 vscode:
   ingress:
-    hosts:
-      - "hass-editor.$DOMAIN"
+    hosts: [hass-editor.$DOMAIN]
     annotations:
       traefik.ingress.kubernetes.io/router.entrypoints: web,websecure
       traefik.ingress.kubernetes.io/router.tls.certresolver: le
