@@ -6,7 +6,7 @@ sonarr:
           - path: "/"
             pathType: Prefix
     annotations:
-      traefik.ingress.kubernetes.io/router.entrypoints: web,websecure
+      traefik.ingress.kubernetes.io/router.entrypoints: websecure
       traefik.ingress.kubernetes.io/router.tls.certresolver: le
       traefik.ingress.kubernetes.io/router.tls.domains.0.main: "*.$DOMAIN"
       traefik.ingress.kubernetes.io/router.tls.domains.0.sans: "$DOMAIN"

@@ -34,7 +34,7 @@ spec:
       - 10.42.0.0/16   # k3s pod ips
     extraEnv:
       PUID: '"1000"'
-      PGID: '"1000"'
+      PGID: '"100"'
     persistence:
       transcode:
         enabled: true

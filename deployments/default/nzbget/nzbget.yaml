@@ -22,9 +22,10 @@ spec:
         enabled: true
         annotations:
           kubernetes.io/ingress.class: "traefik"
-      timezone: "Europe/Vienna"
-      puid: 1000
-      pgid: 1000
+      env:
+        TZ: "Europe/Vienna"
+        PUID: "1000"
+        PGID: "100"
       persistence:
         config:
           enabled: true
