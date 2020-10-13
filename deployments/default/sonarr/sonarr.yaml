@@ -38,6 +38,11 @@ spec:
         - name: media
           persistentVolumeClaim:
             claimName: local-media-pvc
+      additionalVolumeMounts:
+        - name: downloads
+          mountPath: /downloads
+        - name: media
+          mountPath: /media
       resources:
         requests:
           memory: 350Mi
