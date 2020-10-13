@@ -3,15 +3,17 @@ apiVersion: v1
 kind: PersistentVolume
 metadata:
   name: local-media-pv
+  annotations:
+    fluxcd.io/ignore: "true"
 spec:
   capacity:
-    storage: 50Gi
+    storage: 1200Gi
   accessModes:
     - ReadWriteMany
   persistentVolumeReclaimPolicy: Retain
   storageClassName: native-local-storage
   local:
-    path: /pv/media
+    path: /k3s-hdd/media
   nodeAffinity:
     required:
       nodeSelectorTerms:
@@ -25,6 +27,8 @@ apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
   name: local-media-pvc
+  annotations:
+    fluxcd.io/ignore: "true"
 spec:
   accessModes:
     - ReadWriteMany
@@ -32,4 +36,4 @@ spec:
   volumeName: local-media-pv
   resources:
     requests:
-      storage: 50Gi
+      storage: 1200Gi

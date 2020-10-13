@@ -5,7 +5,7 @@ metadata:
   name: sonarr
   namespace: default
   annotations:
-    fluxcd.io/ignore: "true"
+    fluxcd.io/ignore: "false"
     fluxcd.io/automated: "false"
 spec:
   releaseName: sonarr
@@ -17,36 +17,31 @@ spec:
     name: sonarr
     version: 6.0.1
   values:
-    timezone: "Europe/Vienna"
-    puid: 1000
-    pgid: 1000
-    ingress:
-      enabled: true
-      annotations:
-        kubernetes.io/ingress.class: "traefik"
-    podAnnotations:
-      backup.velero.io/backup-volumes: config
-    persistence:
-      #
-      # config needs to be local-path, see https://github.com/Sonarr/Sonarr/issues/1886
-      #
-      config:
+    sonarr:
+      ingress:
         enabled: true
-        storageClass: "local-path"
-      downloads:
-        enabled: false
-      tv:
-        enabled: false
-      extraExistingClaimMounts:
+        annotations:
+          kubernetes.io/ingress.class: "traefik"
+      timezone: "Europe/Vienna"
+      puid: 1000
+      pgid: 1000
+      persistence:
+        config:
+          enabled: true
+          size: 256Mi
+          storageClass: "local-path"
+      additionalVolumes:
+        - name: downloads
+          persistentVolumeClaim:
+            claimName: local-download-pvc
         - name: media
-          existingClaim: nfs-media-pvc
-          mountPath: /media
-          readOnly: false
-    resources:
-      requests:
-        memory: 350Mi
-        cpu: 25m
-      limits:
-        memory: 1000Mi
+          persistentVolumeClaim:
+            claimName: local-media-pvc
+      resources:
+        requests:
+          memory: 350Mi
+          cpu: 25m
+        limits:
+          memory: 1000Mi
   valueFileSecrets:
   - name: "sonarr-helm-values"

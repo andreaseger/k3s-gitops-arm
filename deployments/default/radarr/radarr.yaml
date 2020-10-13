@@ -5,7 +5,7 @@ metadata:
   name: radarr
   namespace: default
   annotations:
-    fluxcd.io/ignore: "true"
+    fluxcd.io/ignore: "false"
     fluxcd.io/automated: "false"
 spec:
   releaseName: radarr
@@ -17,34 +17,31 @@ spec:
     name: radarr
     version: 6.0.1
   values:
-    timezone: "Europe/Vienna"
-    puid: 1000
-    pgid: 100
-    ingress:
-      enabled: true
-      annotations:
-        kubernetes.io/ingress.class: "traefik"
-    persistence:
-      #
-      # config needs to be local-path, see https://github.com/Sonarr/Sonarr/issues/1886
-      #
-      config:
+    radarr:
+      ingress:
         enabled: true
-        storageClass: "local-path"
-      downloads:
-        enabled: false
-      movies:
-        enabled: false
-      extraExistingClaimMounts:
+        annotations:
+          kubernetes.io/ingress.class: "traefik"
+      timezone: "Europe/Vienna"
+      puid: 1000
+      pgid: 1000
+      persistence:
+        config:
+          enabled: true
+          size: 256Mi
+          storageClass: "local-path"
+      additionalVolumes:
+        - name: downloads
+          persistentVolumeClaim:
+            claimName: local-download-pvc
         - name: media
-          existingClaim: nfs-media-pvc
-          mountPath: /media
-          readOnly: false
-    resources:
-      requests:
-        memory: 350Mi
-        cpu: 25m
-      limits:
-        memory: 1000Mi
+          persistentVolumeClaim:
+            claimName: local-media-pvc
+      resources:
+        requests:
+          memory: 350Mi
+          cpu: 25m
+        limits:
+          memory: 1000Mi
   valueFileSecrets:
   - name: "radarr-helm-values"

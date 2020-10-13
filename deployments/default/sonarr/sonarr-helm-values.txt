@@ -1,10 +1,14 @@
-ingress:
-  hosts: [sonarr.$DOMAIN]
-  annotations:
-    traefik.ingress.kubernetes.io/router.middlewares: default-redirect-to-https@kubernetescrd
-    traefik.ingress.kubernetes.io/router.tls.certresolver: le
-    traefik.ingress.kubernetes.io/router.tls.domains.0.main: "*.home.a6.io"
-    traefik.ingress.kubernetes.io/router.tls.domains.0.sans: "home.a6.io"
-  tls:
-  - hosts:
-    - sonarr.$DOMAIN
+sonarr:
+  ingress:
+    hosts:
+      - host: sonarr.$DOMAIN
+        paths: ["/"]
+    annotations:
+      traefik.ingress.kubernetes.io/router.entrypoints: web,websecure
+      traefik.ingress.kubernetes.io/router.tls.certresolver: le
+      traefik.ingress.kubernetes.io/router.tls.domains.0.main: "*.$DOMAIN"
+      traefik.ingress.kubernetes.io/router.tls.domains.0.sans: "$DOMAIN"
+      traefik.ingress.kubernetes.io/router.tls: "true"
+    tls:
+      - hosts:
+        - sonarr.$DOMAIN

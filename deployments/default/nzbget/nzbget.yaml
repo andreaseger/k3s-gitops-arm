@@ -24,7 +24,7 @@ spec:
           kubernetes.io/ingress.class: "traefik"
       timezone: "Europe/Vienna"
       puid: 1000
-      pgid: 100
+      pgid: 1000
       persistence:
         config:
           enabled: true
@@ -33,7 +33,7 @@ spec:
       additionalVolumes:
         - name: downloads
           persistentVolumeClaim:
-            claimName: local-data-pvc
+            claimName: local-download-pvc
       resources:
         requests:
           memory: 300Mi

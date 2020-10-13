@@ -2,18 +2,18 @@
 apiVersion: v1
 kind: PersistentVolume
 metadata:
-  name: local-data-pv
+  name: local-download-pv
   annotations:
     fluxcd.io/ignore: "true"
 spec:
   capacity:
-    storage: 50Gi
+    storage: 300Gi
   accessModes:
     - ReadWriteMany
   persistentVolumeReclaimPolicy: Retain
   storageClassName: native-local-storage
   local:
-    path: /pv/data
+    path: /k3s-hdd/download
   nodeAffinity:
     required:
       nodeSelectorTerms:
@@ -26,14 +26,14 @@ spec:
 apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
-  name: local-data-pvc
+  name: local-download-pvc
   annotations:
     fluxcd.io/ignore: "true"
 spec:
   accessModes:
     - ReadWriteMany
   storageClassName: native-local-storage
-  volumeName: local-data-pv
+  volumeName: local-download-pv
   resources:
     requests:
-      storage: 50Gi
+      storage: 300Gi
