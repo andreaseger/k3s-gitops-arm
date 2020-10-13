@@ -31,6 +31,8 @@ spec:
     hostNetwork: true
     vscode:
       enabled: true
+      service:
+        port: 8042
       image:
         repository: codercom/code-server
         tag: 3.6.0
