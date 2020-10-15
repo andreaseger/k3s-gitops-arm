@@ -1,0 +1,17 @@
+kind: Service
+apiVersion: v1
+metadata:
+  labels:
+    app.kubernetes.io/name: plex
+  name: plex-direct-loadbalancer
+  namespace: default
+spec:
+  ports:
+    - name: plex-direct
+      protocol: TCP
+      port: 32400
+      targetPort: pms
+  selector:
+    app.kubernetes.io/instance: plex
+    app.kubernetes.io/name: plex
+  type: LoadBalancer
