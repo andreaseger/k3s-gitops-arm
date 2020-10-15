@@ -1,6 +1,6 @@
 claimToken: $PLEX_CLAIM_TOKEN
 
-advertiseIp: "http://192.168.1.5:32400,https:plex.$DOMAIN:443,http://10.43.119.2:80,http://10.43.6.235:443,http://10.42.0.4:80"
+advertiseIp: "http://192.168.1.5:32400,https://plex.$DOMAIN"
 
 ingress:
   hosts: [plex.$DOMAIN]
