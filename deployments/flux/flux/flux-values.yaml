@@ -4,8 +4,8 @@ git:
   url: "git@github.com:andreaseger/k3s-gitops-arm.git"
   branch: customize
   path: deployments
-  readonly: true
-  pollInterval: "1m"
+  pollInterval: "5m"
+  # readonly: true
 image:
   repository: raspbernetes/flux
   tag: 1.20.2
