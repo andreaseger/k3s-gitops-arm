@@ -16,7 +16,7 @@ spec:
     spec:
       containers:
       - name: stadthallenbad-counter
-        image: andreaseger/counter_deamon:3dcfd92
+        image: andreaseger/counter_deamon:e1672bf
         imagePullPolicy: IfNotPresent
         env:
           - name: HASS_TOKEN
