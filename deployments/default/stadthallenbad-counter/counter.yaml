@@ -1,0 +1,33 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: stadthallenbad-counter
+  name: stadthallenbad-counter
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: stadthallenbad-counter
+  template:
+    metadata:
+      labels:
+        app: stadthallenbad-counter
+    spec:
+      containers:
+      - name: stadthallenbad-counter
+        image: andreaseger/counter_deamon:0b26f20
+        imagePullPolicy: IfNotPresent
+        env:
+          - name: HASS_TOKEN
+            valueFrom:
+              secretKeyRef:
+                name: counter-secret
+                key: HASS_TOKEN
+        resources:
+          limits:
+            memory: 512Mi
+          requests:
+            cpu: 35m
+            memory: 50Mi
+        

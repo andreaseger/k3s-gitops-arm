@@ -38,13 +38,14 @@ PUB_CERT="${REPO_ROOT}/secrets/pub-cert.pem"
 # Generic Secrets
 #
 
-# Traefik - default Namespace
+# Traefik - kube-system Namespace
 kubectl create secret generic traefik-secret \
   --from-literal=gandi-api-key="$GANDIV5_API_KEY" \
   --namespace kube-system --dry-run=client -o json \
   | \
 kubeseal --format=yaml --cert="$PUB_CERT" \
     > "$REPO_ROOT"/deployments/kube-system/traefik-ingress/traefik-secret.yaml
+
 
 # Traefik Basic Auth - default Namespace
 kubectl create secret generic traefik-basic-auth \
@@ -62,3 +63,10 @@ kubectl create secret generic traefik-basic-auth \
 kubeseal --format=yaml --cert="$PUB_CERT" \
     > "$REPO_ROOT"/deployments/kube-system/traefik-ingress/basic-auth-kube-system.yaml
 
+# Traefik - default Namespace
+kubectl create secret generic traefik-secret \
+  --from-literal=HASS_TOKEN="$HASS_TOKEN" \
+  --namespace default --dry-run=client -o json \
+  | \
+kubeseal --format=yaml --cert="$PUB_CERT" \
+    > "$REPO_ROOT"/deployments/default/stadthallenbad-counter/counter-secret.yaml
