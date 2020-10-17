@@ -63,8 +63,8 @@ kubectl create secret generic traefik-basic-auth \
 kubeseal --format=yaml --cert="$PUB_CERT" \
     > "$REPO_ROOT"/deployments/kube-system/traefik-ingress/basic-auth-kube-system.yaml
 
-# Traefik - default Namespace
-kubectl create secret generic traefik-secret \
+# Counter - default Namespace
+kubectl create secret generic counter-secret \
   --from-literal=HASS_TOKEN="$HASS_TOKEN" \
   --namespace default --dry-run=client -o json \
   | \
