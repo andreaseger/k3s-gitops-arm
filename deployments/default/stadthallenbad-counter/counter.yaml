@@ -16,7 +16,7 @@ spec:
     spec:
       containers:
       - name: stadthallenbad-counter
-        image: andreaseger/counter_deamon:0b26f20
+        image: andreaseger/counter_deamon:8b19b3c
         imagePullPolicy: IfNotPresent
         env:
           - name: HASS_TOKEN
@@ -24,6 +24,8 @@ spec:
               secretKeyRef:
                 name: counter-secret
                 key: HASS_TOKEN
+          - name: REFRESH_SECONDS
+            value: "30"
         resources:
           limits:
             memory: 512Mi
