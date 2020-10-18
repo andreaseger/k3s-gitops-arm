@@ -16,7 +16,7 @@ spec:
     spec:
       containers:
       - name: stadthallenbad-counter
-        image: ghcr.io/andreaseger/stadthallenbad_counter:7da3b47
+        image: ghcr.io/andreaseger/stadthallenbad_counter:main
         imagePullPolicy: IfNotPresent
         env:
           - name: HASS_TOKEN
