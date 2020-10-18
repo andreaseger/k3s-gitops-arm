@@ -16,7 +16,7 @@ spec:
     spec:
       containers:
       - name: stadthallenbad-counter
-        image: andreaseger/counter_deamon:e1672bf
+        image: ghcr.io/andreaseger/stadthallenbad_counter:7da3b47
         imagePullPolicy: IfNotPresent
         env:
           - name: HASS_TOKEN
@@ -32,4 +32,6 @@ spec:
           requests:
             cpu: 35m
             memory: 50Mi
+      imagePullSecrets:
+        - name: ghcr-pull-secret
         
