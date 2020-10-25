@@ -32,6 +32,14 @@ spec:
           requests:
             cpu: 35m
             memory: 50Mi
+        volumeMounts:
+          - name: config-volume
+            mountPath: /usr/src/app/holidays.json
+            subPath: holidays.json
+      volumes:
+        - name: config-volume
+          configMap:
+            name: counter-holidays
       imagePullSecrets:
         - name: ghcr-pull-secret
         
