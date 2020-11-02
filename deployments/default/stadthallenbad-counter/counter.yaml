@@ -5,7 +5,7 @@ metadata:
     app: stadthallenbad-counter
   name: stadthallenbad-counter
 spec:
-  replicas: 1
+  replicas: 0
   selector:
     matchLabels:
       app: stadthallenbad-counter
