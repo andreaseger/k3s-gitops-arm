@@ -21,7 +21,7 @@ spec:
   values:
     image:
       repository: linuxserver/plex
-      tag: version-1.20.2.3402-0fec14d92
+      tag: version-1.20.4.3517-ab5e1197c
       pullPolicy: IfNotPresent
     ingress:
       enabled: true
