@@ -17,11 +17,11 @@ spec:
   chart:
     repository: https://k8s-at-home.com/charts/
     name: plex
-    version: 2.0.4
+    version: 2.1.1
   values:
     image:
       repository: linuxserver/plex
-      tag: version-1.20.4.3517-ab5e1197c
+      tag: version-1.21.1.3876-3c3adfcb4
       pullPolicy: IfNotPresent
     ingress:
       enabled: true

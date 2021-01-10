@@ -8,6 +8,7 @@ metadata:
     fluxcd.io/ignore: "false"
     fluxcd.io/automated: "false"
     fluxcd.io/tag.chart-image: semver:~0.
+    todo: "migrate to common chart"
 spec:
   releaseName: hass
   helmVersion: v3
@@ -16,7 +17,7 @@ spec:
   chart:
     repository: https://k8s-at-home.com/charts/
     name: home-assistant
-    version: 3.4.0
+    version: 4.0.0
   values:
     extraEnv:
       TZ: "Europe/Vienna"
