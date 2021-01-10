@@ -16,7 +16,7 @@ spec:
   chart:
     repository: https://k8s-at-home.com/charts/
     name: nzbget
-    version: 7.3.1
+    version: 5.0.0
   values:
     nzbget:
       ingress:
