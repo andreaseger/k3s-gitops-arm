@@ -2,8 +2,7 @@ nzbget:
   ingress:
     hosts:
       - host: nzbget.$DOMAIN
-        paths: 
-          - path: "/"
+        paths: ["/"]
     annotations:
       traefik.ingress.kubernetes.io/router.entrypoints: websecure
       traefik.ingress.kubernetes.io/router.tls.certresolver: le
