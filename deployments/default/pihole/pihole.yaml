@@ -16,7 +16,7 @@ spec:
   chart:
     repository: https://mojo2600.github.io/pihole-kubernetes/
     name: pihole
-    version: 1.7.17
+    version: 1.8.35
   values:
     serviceTCP:
       type: ClusterIP
